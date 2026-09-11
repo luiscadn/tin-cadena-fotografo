@@ -62,28 +62,33 @@ export const Dashboard = () => {
 
   return (
     <SidebarLayout>
-      {/* Welcome Section */}
-      <div className="bg-white rounded-3xl p-8 mb-8 shadow-sm border border-stone-200">
-        <h1 className="text-3xl font-black text-[#2a2421] tracking-tight mb-2">
-          {getWelcomeMessage()}
-        </h1>
-        <p className="text-stone-500 text-lg">
-          {getRoleDescription()}
-        </p>
-      </div>
+      {/* Welcome Header */}
+      <header className="pm-page-header border-b border-zinc-800/80 pb-5 mb-8">
+        <div>
+          <h1 className="pm-page-title flex items-center gap-2.5">
+            <i className="bi bi-house-door text-zinc-400"></i> {getWelcomeMessage()}
+          </h1>
+          <p className="pm-page-subtitle">
+            {getRoleDescription()}
+          </p>
+        </div>
+      </header>
 
       {/* Action Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {actionCards.map((card, index) => (
-          <div key={index} className="bg-white rounded-2xl p-6 border border-stone-100 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
-            <div className="w-12 h-12 bg-[#2a2421] text-amber-500 rounded-xl flex items-center justify-center text-2xl mb-4 shadow-inner">
+          <div
+            key={index}
+            className="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-6 shadow-lg hover:border-zinc-700/80 transition-all flex flex-col h-full backdrop-blur-sm"
+          >
+            <div className="w-12 h-12 bg-zinc-800/80 border border-zinc-700/60 text-white rounded-xl flex items-center justify-center text-xl mb-5 shadow-inner">
               <i className={`bi ${card.icon}`}></i>
             </div>
-            <h3 className="text-xl font-bold text-[#2a2421] mb-2">{card.title}</h3>
-            <p className="text-stone-500 mb-6 flex-grow leading-relaxed">{card.description}</p>
+            <h3 className="text-base font-semibold text-zinc-100 mb-2">{card.title}</h3>
+            <p className="text-zinc-400 text-xs mb-6 flex-grow leading-relaxed">{card.description}</p>
             <Link 
               to={card.path}
-              className="mt-auto block w-full text-center py-2.5 rounded-xl bg-stone-100 hover:bg-[#2a2421] text-[#2a2421] hover:text-white font-bold transition-colors duration-200"
+              className="mt-auto block w-full text-center py-2.5 rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 font-semibold text-xs transition-all shadow-sm active:scale-95"
             >
               {card.buttonLabel}
             </Link>
@@ -92,10 +97,12 @@ export const Dashboard = () => {
       </div>
 
       {/* Recent Activity */}
-      <div className="mt-8 bg-stone-50 border border-stone-200 border-dashed rounded-3xl p-10 text-center">
-        <i className="bi bi-clock-history text-4xl text-stone-300 mb-3 block"></i>
-        <h4 className="text-lg font-bold text-stone-600">Actividad Reciente</h4>
-        <p className="text-stone-400 mt-1">Tu historial de navegación y acciones recientes aparecerá aquí.</p>
+      <div className="mt-8 bg-zinc-900/30 border border-zinc-800 border-dashed rounded-2xl p-8 text-center backdrop-blur-sm">
+        <i className="bi bi-clock-history text-3xl text-zinc-600 mb-3 block"></i>
+        <h4 className="text-sm font-semibold text-zinc-300">Actividad Reciente</h4>
+        <p className="text-xs text-zinc-500 mt-1 max-w-sm mx-auto">
+          Su historial de adquisiciones y actividad artística aparecerá reflejado aquí.
+        </p>
       </div>
     </SidebarLayout>
   )

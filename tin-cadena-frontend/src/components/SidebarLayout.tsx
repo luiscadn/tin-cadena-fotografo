@@ -33,7 +33,7 @@ export const SidebarLayout = ({
     { label: 'Explorar Galería', path: '/explore', icon: 'bi-compass' },
     { label: 'Mis Favoritos', path: '/favorites', icon: 'bi-heart' },
     { label: 'Mis Compras', path: '/purchases', icon: 'bi-bag' },
-    { label: `Carrito ${cartItemsCount > 0 ? `(${cartItemsCount})` : ''}`, path: '/checkout', icon: 'bi-cart2' },
+    { label: `Carrito ${cartItemsCount > 0 ? `[${cartItemsCount}]` : ''}`, path: '/checkout', icon: 'bi-cart2' },
   ]
 
   const operativeItems: NavigationItem[] = []
@@ -80,7 +80,7 @@ export const SidebarLayout = ({
         <div className="p-6 flex items-center gap-3 border-b border-white/5">
           <i className="bi bi-camera2 text-2xl text-white"></i>
           <div className="flex flex-col">
-            <span className="text-sm font-bold tracking-[0.18em] text-white" style={{ fontFamily: "'Cinzel', serif" }}>
+            <span className="text-sm font-bold tracking-[0.18em] text-white">
               TIN CADENA
             </span>
             <span className="text-[8px] tracking-[0.2em] uppercase text-zinc-400 font-semibold">

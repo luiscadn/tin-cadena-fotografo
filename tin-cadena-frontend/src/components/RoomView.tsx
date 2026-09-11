@@ -102,7 +102,7 @@ export const RoomView = ({
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="text-[10px] text-stone-400 text-center font-serif leading-tight">
+                  <div className="text-[10px] text-stone-400 text-center font-semibold leading-tight">
                     Fine Art
                     <br />
                     Photo

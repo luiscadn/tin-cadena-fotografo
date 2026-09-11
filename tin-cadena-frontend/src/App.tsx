@@ -153,14 +153,14 @@ export const App = () => {
 
         {/* Global STOMP Toast Notification Panel */}
         {toastMessage && (
-          <div className="fixed bottom-5 right-5 z-50 animate-bounce max-w-sm p-4 bg-gradient-to-r from-red-650 to-stone-900 text-white rounded-2xl border border-red-500/20 shadow-2xl flex items-center justify-between gap-4">
+          <div className="fixed bottom-5 right-5 z-50 max-w-sm p-4 bg-zinc-900/95 text-zinc-100 rounded-2xl border border-zinc-700/80 shadow-2xl flex items-center justify-between gap-4 backdrop-blur-md">
             <div className="flex items-center gap-3">
-              <span className="text-2xl">🔔</span>
-              <p className="text-xs font-extrabold leading-snug text-left">{toastMessage}</p>
+              <i className="bi bi-bell-fill text-amber-400 text-lg flex-shrink-0"></i>
+              <p className="text-xs font-semibold leading-snug text-left text-zinc-200">{toastMessage}</p>
             </div>
             <button
               onClick={() => setToastMessage(null)}
-              className="text-white hover:text-red-300 font-bold text-xl px-1.5 focus:outline-none"
+              className="text-zinc-400 hover:text-white font-bold text-lg px-1.5 transition-colors focus:outline-none"
             >
               &times;
             </button>

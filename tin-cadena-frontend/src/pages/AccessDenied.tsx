@@ -7,36 +7,31 @@ export const AccessDenied = () => {
     <main className="pm-auth-page">
       <section className="pm-auth-card">
         <div className="pm-brand">
-          <i className="bi bi-camera pm-brand-icon"></i>
-          <h1 className="pm-brand-title">PhotoMarket</h1>
+          <i className="bi bi-shield-x pm-brand-icon text-rose-400"></i>
+          <h1 className="pm-brand-title">TIN CADENA</h1>
+          <p className="pm-brand-subtitle">
+            FINE ART PHOTOGRAPHY · MIAMI
+          </p>
         </div>
 
-        <p className="pm-brand-subtitle">
-          Acceso denegado
-        </p>
-
-        <div className="pm-alert pm-alert-error">
-          No tienes permisos para acceder a esta sección.
+        <div className="pm-alert pm-alert-error mb-6">
+          <i className="bi bi-exclamation-octagon-fill"></i>
+          <span>No posee los privilegios necesarios para acceder a esta sección de la galería.</span>
         </div>
 
-        <div
-          style={{
-            display: 'grid',
-            gap: '0.75rem',
-          }}
-        >
-          <Link
-            to="/login"
-            className="pm-btn pm-btn-outline pm-btn-full"
-          >
-            Ir al login
-          </Link>
-
+        <div className="grid gap-3">
           <Link
             to="/dashboard"
             className="pm-btn pm-btn-primary pm-btn-full"
           >
-            Ir al panel
+            Ir al Panel Principal
+          </Link>
+
+          <Link
+            to="/login"
+            className="pm-btn pm-btn-outline pm-btn-full"
+          >
+            Iniciar con otra cuenta
           </Link>
         </div>
       </section>
