@@ -1,41 +1,35 @@
-/* src/components/auth/auth.css */
+/* src/styles/auth.css — Tin Cadena Luxury Minimalist */
 
 .auth-form input,
 .auth-form select {
-  background: rgba(44, 44, 42, 0.55) !important;
-  border: 1px solid rgba(107, 66, 38, 0.9) !important;
-  color: var(--offwhite) !important;
-  border-radius: 10px !important;
-  padding: 0.75rem !important;
-  font-size: 1rem !important;
-  transition: all 0.3s ease;
+  background: rgba(24, 24, 28, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #f4f4f5 !important;
+  border-radius: 12px !important;
+  padding: 0.8rem 1rem !important;
+  font-size: 0.95rem !important;
+  transition: all 0.25s ease;
   font-family: inherit;
 }
 
 .auth-form input:focus,
 .auth-form select:focus {
-  border-color: var(--leather) !important;
-  box-shadow: 0 0 0 0.25rem rgba(196, 122, 58, 0.25) !important;
-  background: rgba(44, 44, 42, 0.6) !important;
-  color: var(--offwhite) !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3) !important;
+  background: rgba(30, 30, 36, 0.9) !important;
+  color: #ffffff !important;
   outline: none !important;
 }
 
 .auth-form input::placeholder {
-  color: rgba(245, 240, 232, 0.5) !important;
+  color: rgba(161, 161, 170, 0.5) !important;
 }
 
-/* Loading state */
 .btn-primary:disabled {
-  opacity: 0.7;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
-/* Link styling */
 .auth-card a {
-  transition: color 0.3s ease;
-}
-
-.auth-card a:hover {
-  text-decoration: none;
+  transition: color 0.2s ease;
 }

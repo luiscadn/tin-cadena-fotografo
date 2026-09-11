@@ -48,21 +48,21 @@ export const LoginForm = () => {
     <main className="pm-auth-page">
       <section className="pm-auth-card">
         <div className="pm-brand">
-          <i className="bi bi-camera pm-brand-icon"></i>
-          <h1 className="pm-brand-title">PhotoMarket</h1>
+          <i className="bi bi-camera2 pm-brand-icon"></i>
+          <h1 className="pm-brand-title">TIN CADENA</h1>
+          <p className="pm-brand-subtitle">
+            FINE ART PHOTOGRAPHY · MIAMI
+          </p>
         </div>
-
-        <p className="pm-brand-subtitle">
-          Accede a tu panel de gestión
-        </p>
 
         {error && (
           <div className="pm-alert pm-alert-error">
-            {error}
+            <i className="bi bi-exclamation-circle"></i>
+            <span>{error}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="space-y-3">
           <div className="pm-form-group">
             <label
               htmlFor="username"
@@ -76,7 +76,7 @@ export const LoginForm = () => {
               name="username"
               type="text"
               className="pm-form-control"
-              placeholder="Ingresa tu usuario"
+              placeholder="Ingresa tu nombre de usuario"
               autoComplete="username"
               value={formData.username}
               onChange={handleChange}
@@ -123,22 +123,24 @@ export const LoginForm = () => {
             type="submit"
             className="pm-btn pm-btn-primary pm-btn-full"
             disabled={loading}
+            style={{ marginTop: '1.25rem' }}
           >
-            {loading ? 'Ingresando...' : 'Entrar'}
+            {loading ? 'Accediendo...' : 'Iniciar Sesión'}
           </button>
         </form>
 
         <div className="pm-auth-footer">
           ¿No tienes una cuenta?{' '}
-
           <Link
             to="/register"
             className="pm-link"
           >
-            Crear una cuenta
+            Crear Cuenta
           </Link>
         </div>
       </section>
     </main>
   )
 }
+
+export default LoginForm

@@ -8,12 +8,12 @@
 		<version>3.5.13</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.icesi</groupId>
-	<artifactId>PhotoMarketApplication</artifactId>
+	<groupId>com.tincadena</groupId>
+	<artifactId>tin-cadena-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>PhotoMarketApplication</name>
-	<description>Desarrollar un backend utilizando el framework de Spring Boot que permita  consumir información desde una base de datos, empleando hibernate por medio de Spring  Data JPA. </description>
+	<name>TinCadenaApplication</name>
+	<description>Backend para la plataforma de fotografia Fine Art de Alvaro Cadena</description>
 	<url/>
 	<licenses>
 		<license/>

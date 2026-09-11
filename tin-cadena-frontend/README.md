@@ -43,10 +43,10 @@ La configuracion se administra a traves del archivo .env en la raiz de tin-caden
 
 ```env
 # URL de la API REST del backend
-VITE_API_BASE_URL=http://localhost:8081/api
+VITE_API_BASE_URL=http://localhost:8085/api
 
 # URL del endpoint de WebSocket STOMP
-VITE_WS_URL=http://localhost:8081/ws
+VITE_WS_URL=http://localhost:8085/ws
 
 # Ruta base de la aplicacion
 VITE_BASE_PATH=/

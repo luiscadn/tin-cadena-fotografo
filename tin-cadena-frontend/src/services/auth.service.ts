@@ -15,6 +15,7 @@ export interface RegisterPayload {
   password: string
   firstName: string
   lastName: string
+  name?: string
 }
 
 export const authService = {

@@ -57,7 +57,7 @@ El sistema se conecta a PostgreSQL mediante src/main/resources/application.prope
 - URL: jdbc:postgresql://localhost:5432/photo_market
 - Usuario: postgres
 - Contraseña: postgres
-- Puerto del Servidor: 8081
+- Puerto del Servidor: 8085
 
 ---
 
@@ -92,7 +92,7 @@ Para generar el reporte de cobertura de pruebas JaCoCo:
 
 ## Guia de Endpoints REST
 
-La API expone sus servicios en el puerto 8081 con prefijo /api:
+La API expone sus servicios en el puerto 8085 con prefijo /api:
 
 | Modulo | Endpoint | Metodos HTTP |
 | :--- | :--- | :--- |

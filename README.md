@@ -26,8 +26,8 @@ Para compilar y ejecutar el servidor:
 cd tin-cadena-backend
 ./mvnw spring-boot:run
 ```
-El servidor estara disponible en el puerto 8081:
-http://localhost:8081/api
+El servidor estara disponible en el puerto 8085:
+http://localhost:8085/api
 
 Para correr pruebas unitarias:
 ```bash
@@ -72,8 +72,8 @@ npm run build
 
 El cliente web cuenta con configuracion dinamica mediante variables de entorno en tin-cadena-frontend/.env:
 
-- VITE_API_BASE_URL: URL del API REST [por defecto http://localhost:8081/api]
-- VITE_WS_URL: URL del canal WebSocket [por defecto http://localhost:8081/ws]
+- VITE_API_BASE_URL: URL del API REST [por defecto http://localhost:8085/api]
+- VITE_WS_URL: URL del canal WebSocket [por defecto http://localhost:8085/ws]
 - VITE_BASE_PATH: Prefijo de rutas [por defecto /]
 
 ---

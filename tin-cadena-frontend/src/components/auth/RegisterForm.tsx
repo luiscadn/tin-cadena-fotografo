@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 import api from '@services/api'
 import { ENDPOINTS } from '@utils/constants'
 import type { RegisterPayload } from '@services/auth.service'
@@ -33,14 +34,26 @@ export const RegisterForm = () => {
     setError(null)
 
     try {
-      await api.post(ENDPOINTS.AUTH.REGISTER, formData)
+      const payload = {
+        ...formData,
+        name: `${formData.firstName} ${formData.lastName}`.trim(),
+      }
+      await api.post(ENDPOINTS.AUTH.REGISTER, payload)
       navigate('/login')
-    } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : 'Error en el registro. Intenta de nuevo.',
-      )
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        const serverMessage =
+          err.response?.data?.message || err.response?.data?.error
+        setError(
+          typeof serverMessage === 'string'
+            ? serverMessage
+            : 'Error en el registro. Verifica los datos ingresados.',
+        )
+      } else if (err instanceof Error) {
+        setError(err.message)
+      } else {
+        setError('Error en el registro. Intenta de nuevo.')
+      }
     } finally {
       setLoading(false)
     }
@@ -50,53 +63,55 @@ export const RegisterForm = () => {
     <main className="pm-auth-page">
       <section className="pm-auth-card">
         <div className="pm-brand">
-          <i className="bi bi-camera pm-brand-icon"></i>
-          <h1 className="pm-brand-title">PhotoMarket</h1>
+          <i className="bi bi-camera2 pm-brand-icon"></i>
+          <h1 className="pm-brand-title">TIN CADENA</h1>
+          <p className="pm-brand-subtitle">
+            FINE ART PHOTOGRAPHY · MIAMI
+          </p>
         </div>
-
-        <p className="pm-brand-subtitle">
-          Crea tu cuenta y descubre el arte
-        </p>
 
         {error && (
           <div className="pm-alert pm-alert-error">
-            {error}
+            <i className="bi bi-exclamation-circle"></i>
+            <span>{error}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
-          <div className="pm-form-group">
-            <label htmlFor="firstName" className="pm-form-label">
-              Nombre
-            </label>
-            <input
-              id="firstName"
-              name="firstName"
-              type="text"
-              className="pm-form-control"
-              placeholder="Tu nombre"
-              value={formData.firstName}
-              onChange={handleChange}
-              required
-              disabled={loading}
-            />
-          </div>
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="pm-form-group" style={{ marginBottom: 0 }}>
+              <label htmlFor="firstName" className="pm-form-label">
+                Nombre
+              </label>
+              <input
+                id="firstName"
+                name="firstName"
+                type="text"
+                className="pm-form-control"
+                placeholder="Nombre"
+                value={formData.firstName}
+                onChange={handleChange}
+                required
+                disabled={loading}
+              />
+            </div>
 
-          <div className="pm-form-group">
-            <label htmlFor="lastName" className="pm-form-label">
-              Apellido
-            </label>
-            <input
-              id="lastName"
-              name="lastName"
-              type="text"
-              className="pm-form-control"
-              placeholder="Tu apellido"
-              value={formData.lastName}
-              onChange={handleChange}
-              required
-              disabled={loading}
-            />
+            <div className="pm-form-group" style={{ marginBottom: 0 }}>
+              <label htmlFor="lastName" className="pm-form-label">
+                Apellido
+              </label>
+              <input
+                id="lastName"
+                name="lastName"
+                type="text"
+                className="pm-form-control"
+                placeholder="Apellido"
+                value={formData.lastName}
+                onChange={handleChange}
+                required
+                disabled={loading}
+              />
+            </div>
           </div>
 
           <div className="pm-form-group">
@@ -108,7 +123,7 @@ export const RegisterForm = () => {
               name="username"
               type="text"
               className="pm-form-control"
-              placeholder="Elige un usuario"
+              placeholder="Elige un nombre de usuario"
               value={formData.username}
               onChange={handleChange}
               required
@@ -143,7 +158,7 @@ export const RegisterForm = () => {
                 name="password"
                 type={showPassword ? 'text' : 'password'}
                 className="pm-form-control"
-                placeholder="Crea tu contraseña"
+                placeholder="Mínimo 6 caracteres"
                 value={formData.password}
                 onChange={handleChange}
                 required
@@ -163,19 +178,21 @@ export const RegisterForm = () => {
             type="submit"
             className="pm-btn pm-btn-primary pm-btn-full"
             disabled={loading}
-            style={{ marginTop: '1.5rem' }}
+            style={{ marginTop: '1.25rem' }}
           >
-            {loading ? 'Creando cuenta...' : 'Crear cuenta'}
+            {loading ? 'Creando cuenta...' : 'Crear Cuenta'}
           </button>
         </form>
 
         <div className="pm-auth-footer">
           ¿Ya tienes cuenta?{' '}
           <Link to="/login" className="pm-link">
-            Inicia sesión
+            Iniciar Sesión
           </Link>
         </div>
       </section>
     </main>
   )
 }
+
+export default RegisterForm

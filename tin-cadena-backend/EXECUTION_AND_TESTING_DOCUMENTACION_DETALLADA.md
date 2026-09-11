@@ -63,7 +63,7 @@ Desde el directorio tin-cadena-backend:
 ```
 
 El servidor quedara disponible en:
-http://localhost:8081
+http://localhost:8085
 
 ---
 
@@ -81,7 +81,7 @@ Otros perfiles de prueba [cargados por data.sql]:
 
 ## Endpoints API REST
 
-La aplicacion expone los servicios REST en el puerto 8081 bajo el prefijo /api:
+La aplicacion expone los servicios REST en el puerto 8085 bajo el prefijo /api:
 
 ### Autenticacion
 - POST /api/auth/login [Generar Token JWT]
@@ -129,10 +129,10 @@ Ubicacion del reporte generado: target/site/jacoco/index.html
 
 ## Solucion de Problemas
 
-### Puerto 8081 en Uso
-Si el puerto 8081 esta ocupado por otra instancia, se puede liberar en macOS o Linux con:
+### Puerto 8085 en Uso
+Si el puerto 8085 esta ocupado por otra instancia, se puede liberar en macOS o Linux con:
 ```bash
-lsof -ti:8081 | xargs kill -9
+lsof -ti:8085 | xargs kill -9
 ```
 
 ### Problemas de Conexion a Base de Datos

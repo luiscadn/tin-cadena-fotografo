@@ -5,6 +5,7 @@ import { Client } from '@stomp/stompjs'
 import { useFavorites } from './useFavorites'
 import { useAuth } from './useAuth'
 import SockJS from 'sockjs-client'
+import { WS_URL } from '../utils/constants'
 
 export const useWebSocketNotifications = (
   onShowToast: (message: string) => void
@@ -27,7 +28,7 @@ export const useWebSocketNotifications = (
     if (!isAuthenticated) return
 
     const client = new Client({
-      webSocketFactory: () => new SockJS('http://localhost:8081/ws'),
+      webSocketFactory: () => new SockJS(WS_URL),
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
