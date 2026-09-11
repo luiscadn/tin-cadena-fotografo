@@ -1,0 +1,43 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.iws
+*.iml
+*.ipr
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# Node / Frontend
+**/node_modules/
+**/dist/
+**/dist-ssr/
+*.local
+tin-cadena-frontend/.env
+
+# Java / Maven / Backend
+**/target/
+**/build/
+.mvn/wrapper/maven-wrapper.jar
+*.class
+
+# Postman
+*.postman_environment.json
+
+# Local scripts / sensitive / temp
+update_admin.sql
+update_passwords.sql
+*.sql.bak

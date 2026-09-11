@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' | PhotoMarket'">Gestionar Permisos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link th:href="@{/css/theme.css}" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div th:replace="~{layout :: layout}">
+
+    <!-- Vista: Asociar / Desasociar Permisos de un Rol -->
+    <div th:fragment="content">
+
+        <div class="d-flex align-items-center mb-4">
+            <a th:href="@{/roles}" class="btn btn-link text-decoration-none ps-0">
+                <i class="bi bi-arrow-left me-1"></i> Volver a Roles
+            </a>
+            <h1 class="h3 fw-bold mb-0 ms-2">
+                <i class="bi bi-key-fill me-2 text-warning"></i>
+                Permisos del Rol:
+                <span class="text-primary" th:text="${role.name}"></span>
+            </h1>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Columna izquierda: Permisos asignados actualmente -->
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header bg-danger text-white fw-semibold">
+                        <i class="bi bi-check-circle me-1"></i>
+                        Permisos Asignados
+                        <span class="badge bg-white text-danger ms-1"
+                              th:text="${#sets.size(role.permissions)}">0</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted small" th:if="${#sets.isEmpty(role.permissions)}">
+                            Este rol no tiene permisos asignados.
+                        </p>
+
+                        <ul class="list-group list-group-flush" id="assigned-permissions-list">
+                            <li th:each="p : ${role.permissions}"
+                                th:id="'assigned-perm-' + ${p.id}"
+                                class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <span>
+                                    <i class="bi bi-key text-warning me-2"></i>
+                                    <span th:text="${p.name}" class="fw-semibold"></span>
+                                </span>
+                                <!-- Quitar permiso -->
+                                <form th:action="@{/roles/{rId}/permissions/{pId}/remove(rId=${role.id}, pId=${p.id})}"
+                                      method="post" class="d-inline">
+                                    <button type="submit"
+                                            th:id="'btn-remove-perm-' + ${p.id}"
+                                            class="btn btn-sm btn-outline-danger"
+                                            title="Quitar permiso"
+                                            onclick="return confirm('¿Quitar este permiso del rol?')">
+                                        <i class="bi bi-dash-circle"></i>
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna derecha: Permisos disponibles para agregar -->
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header bg-success text-white fw-semibold">
+                        <i class="bi bi-plus-circle me-1"></i>
+                        Permisos Disponibles
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush" id="available-permissions-list">
+
+                            <th:block th:each="p : ${allPermissions}">
+                                <!-- Solo mostramos permisos que NO están ya asignados -->
+                                <li th:unless="${role.permissions.contains(p)}"
+                                    th:id="'available-perm-' + ${p.id}"
+                                    class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <span>
+                                        <i class="bi bi-key-fill text-secondary me-2"></i>
+                                        <span th:text="${p.name}"></span>
+                                    </span>
+                                    <!-- Agregar permiso -->
+                                    <form th:action="@{/roles/{rId}/permissions/{pId}/add(rId=${role.id}, pId=${p.id})}"
+                                          method="post" class="d-inline">
+                                        <button type="submit"
+                                                th:id="'btn-add-perm-' + ${p.id}"
+                                                class="btn btn-sm btn-outline-success"
+                                                title="Agregar permiso">
+                                            <i class="bi bi-plus-circle"></i>
+                                        </button>
+                                    </form>
+                                </li>
+                            </th:block>
+
+                        </ul>
+                        <p class="text-muted small mt-2 mb-0"
+                           th:if="${#sets.size(role.permissions) == #lists.size(allPermissions)}">
+                            <i class="bi bi-check-all me-1"></i>
+                            Todos los permisos disponibles ya están asignados.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div><!-- /content -->
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

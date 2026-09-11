@@ -1,0 +1,41 @@
+/* src/components/auth/auth.css */
+
+.auth-form input,
+.auth-form select {
+  background: rgba(44, 44, 42, 0.55) !important;
+  border: 1px solid rgba(107, 66, 38, 0.9) !important;
+  color: var(--offwhite) !important;
+  border-radius: 10px !important;
+  padding: 0.75rem !important;
+  font-size: 1rem !important;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.auth-form input:focus,
+.auth-form select:focus {
+  border-color: var(--leather) !important;
+  box-shadow: 0 0 0 0.25rem rgba(196, 122, 58, 0.25) !important;
+  background: rgba(44, 44, 42, 0.6) !important;
+  color: var(--offwhite) !important;
+  outline: none !important;
+}
+
+.auth-form input::placeholder {
+  color: rgba(245, 240, 232, 0.5) !important;
+}
+
+/* Loading state */
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Link styling */
+.auth-card a {
+  transition: color 0.3s ease;
+}
+
+.auth-card a:hover {
+  text-decoration: none;
+}

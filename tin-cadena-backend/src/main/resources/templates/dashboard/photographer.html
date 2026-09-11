@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' | PhotoMarket'">Panel Fotógrafo | PhotoMarket</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link th:href="@{/css/theme.css}" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="~{layout :: layout}">
+
+    <div th:fragment="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1 class="h3 fw-bold mb-0">
+                        <i class="bi bi-camera-fill me-2 text-primary"></i>
+                        Panel Fotógrafo
+                    </h1>
+                    <div class="text-muted">
+                        <i class="bi bi-person-circle me-1"></i>
+                        <span th:text="${username}">Usuario</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Tarjeta de estadísticas -->
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-image fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">Mis Fotografías</h5>
+                        <p class="card-text text-muted">Gestiona tu portafolio</p>
+                        <a href="/photographs" class="btn btn-primary">
+                            <i class="bi bi-plus-circle me-1"></i>Subir Fotografía
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta de ventas -->
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-cash-coin fs-1 text-success mb-3"></i>
+                        <h5 class="card-title">Mis Ventas</h5>
+                        <p class="card-text text-muted">Revisa tus ganancias</p>
+                        <a href="/sales" class="btn btn-success">
+                            <i class="bi bi-graph-up me-1"></i>Ver Ventas
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta de perfil -->
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-person-badge fs-1 text-info mb-3"></i>
+                        <h5 class="card-title">Mi Perfil</h5>
+                        <p class="card-text text-muted">Actualiza tu información</p>
+                        <a href="/profile" class="btn btn-info">
+                            <i class="bi bi-gear me-1"></i>Editar Perfil
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de actividades recientes -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="bi bi-clock-history me-2"></i>
+                            Actividad Reciente
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center text-muted py-4">
+                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                            <p>No tienes actividad reciente</p>
+                            <small>Comienza subiendo fotografías para ver tu actividad aquí</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
