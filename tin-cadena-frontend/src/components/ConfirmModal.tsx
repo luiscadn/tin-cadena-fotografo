@@ -24,23 +24,23 @@ export default function ConfirmModal({
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white rounded-lg shadow-lg max-w-sm mx-4 p-6">
-        <h2 className="text-xl font-bold text-gray-800 mb-4">{title}</h2>
-        <div className="text-gray-600 mb-6">{message}</div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl max-w-md w-full p-6 text-zinc-100">
+        <h2 className="text-lg font-bold text-white tracking-tight mb-2">{title}</h2>
+        <div className="text-sm text-zinc-400 mb-6 leading-relaxed">{message}</div>
         <div className="flex gap-3 justify-end">
           <button
             onClick={onCancel}
-            className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition"
+            className="px-4 py-2.5 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/60 rounded-xl text-zinc-300 font-semibold transition-all text-sm"
           >
             {cancelText}
           </button>
           <button
             onClick={onConfirm}
-            className={`px-4 py-2 text-white rounded-lg transition ${
+            className={`px-4 py-2.5 rounded-xl font-semibold transition-all text-sm ${
               isDangerous
-                ? 'bg-red-500 hover:bg-red-600'
-                : 'bg-blue-500 hover:bg-blue-600'
+                ? 'bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-950/40'
+                : 'bg-white hover:bg-zinc-200 text-zinc-950 shadow-md'
             }`}
           >
             {confirmText}

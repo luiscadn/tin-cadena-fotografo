@@ -40,22 +40,22 @@ export const Favorites = () => {
 
   return (
     <SidebarLayout>
-      <header className="pm-page-header border-b border-stone-200 pb-4 mb-6">
+      <header className="pm-page-header border-b border-zinc-800/80 pb-5 mb-6">
         <div>
-          <h1 className="pm-page-title text-stone-900 font-extrabold flex items-center gap-2">
-            <i className="bi bi-heart-fill text-red-500"></i> Mi Wishlist de Favoritos
+          <h1 className="pm-page-title flex items-center gap-2.5">
+            <i className="bi bi-heart-fill text-rose-500"></i> Mi Wishlist de Favoritos
           </h1>
-          <p className="text-sm text-stone-500 mt-1">
-            Sus obras seleccionadas para adquisición. Recibirá notificaciones en tiempo real si alguna cambia su disponibilidad.
+          <p className="pm-page-subtitle">
+            Obras seleccionadas para adquisición. Notificaciones automáticas de stock y ediciones limitadas en tiempo real.
           </p>
         </div>
       </header>
 
       {favoriteItems.length === 0 ? (
-        <div className="text-center py-20 bg-white border border-stone-200 rounded-2xl p-8">
-          <i className="bi bi-heart text-5xl text-stone-300 block mb-4"></i>
-          <h3 className="text-lg font-bold text-stone-700">Su lista está vacía</h3>
-          <p className="text-sm text-stone-500 mt-1">
+        <div className="text-center py-20 bg-zinc-900/30 border border-dashed border-zinc-800 rounded-2xl p-8 backdrop-blur-sm">
+          <i className="bi bi-heart text-4xl text-zinc-600 block mb-3"></i>
+          <h3 className="text-base font-semibold text-zinc-200">Su lista de favoritos está vacía</h3>
+          <p className="text-sm text-zinc-500 mt-1">
             Explore la galería y marque sus piezas favoritas con el icono de corazón.
           </p>
         </div>
@@ -68,10 +68,10 @@ export const Favorites = () => {
               <article
                 key={photo.id}
                 onClick={() => setSelectedPhoto(photo)}
-                className="group bg-white rounded-2xl overflow-hidden border border-stone-200 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col cursor-pointer"
+                className="group bg-zinc-900/60 rounded-2xl overflow-hidden border border-zinc-800/80 hover:border-zinc-700/80 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col cursor-pointer"
               >
                 {/* Photo Image Card */}
-                <div className="relative aspect-[3/4] bg-stone-100 overflow-hidden">
+                <div className="relative aspect-[3/4] bg-zinc-950 overflow-hidden">
                   <img
                     src={photo.image || 'https://images.unsplash.com/photo-1543857778-c4a1a3e0b2eb?w=500&auto=format&fit=crop&q=80'}
                     alt={photo.title}
@@ -79,8 +79,8 @@ export const Favorites = () => {
                   />
                   
                   {isSold && (
-                    <div className="absolute inset-0 bg-red-950/20 backdrop-blur-[1px] flex items-center justify-center">
-                      <span className="bg-red-600 text-white text-xs font-extrabold px-3 py-1.5 rounded-full">
+                    <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center">
+                      <span className="bg-zinc-900/90 border border-zinc-700 text-zinc-300 text-xs font-bold px-3 py-1 rounded-full shadow-lg">
                         SOLD OUT
                       </span>
                     </div>
@@ -92,7 +92,7 @@ export const Favorites = () => {
                       e.stopPropagation()
                       removeFavorite(photo.id)
                     }}
-                    className="absolute top-3 right-3 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow hover:bg-white text-lg text-red-500 active:scale-95 transition-all"
+                    className="absolute top-3 right-3 w-8 h-8 bg-black/60 hover:bg-black/80 backdrop-blur-md rounded-full flex items-center justify-center shadow-md text-xs text-rose-400 hover:text-rose-300 border border-zinc-700/60 active:scale-95 transition-all"
                   >
                     <i className="bi bi-trash"></i>
                   </button>
@@ -101,17 +101,17 @@ export const Favorites = () => {
                 {/* Details Footer */}
                 <div className="p-4 flex-1 flex flex-col justify-between">
                   <div>
-                    <h3 className="font-extrabold text-stone-900 text-base leading-tight">
+                    <h3 className="font-semibold text-zinc-100 text-base leading-tight group-hover:text-white transition-colors">
                       {photo.title}
                     </h3>
-                    <div className="text-[10px] text-stone-500 font-semibold mt-1">
+                    <div className="text-[11px] text-zinc-400 font-medium mt-1">
                       {getCategoryName(photo.categoryId)}
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center mt-4 pt-3 border-t border-stone-100">
-                    <span className="text-xs text-stone-400 font-bold uppercase">Base</span>
-                    <span className="font-black text-stone-900 text-base">
+                  <div className="flex justify-between items-center mt-4 pt-3 border-t border-zinc-800/80">
+                    <span className="text-[10px] text-zinc-500 font-semibold uppercase tracking-wider">Base</span>
+                    <span className="font-semibold text-white text-base">
                       ${photo.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                     </span>
                   </div>
@@ -124,18 +124,18 @@ export const Favorites = () => {
 
       {/* Immersive Detail Modal */}
       {selectedPhoto && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-stone-950/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="relative bg-stone-50 border border-stone-200 rounded-3xl w-full max-w-5xl overflow-hidden shadow-2xl animate-fade-in flex flex-col md:flex-row max-h-[90vh]">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="relative bg-zinc-900 border border-zinc-800 rounded-3xl w-full max-w-5xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]">
             {/* Modal Close Button */}
             <button
               onClick={() => setSelectedPhoto(null)}
-              className="absolute top-4 right-4 z-10 w-9 h-9 bg-stone-200/80 hover:bg-stone-200 rounded-full flex items-center justify-center text-stone-800 text-lg font-bold shadow"
+              className="absolute top-4 right-4 z-10 w-8 h-8 bg-zinc-800 hover:bg-zinc-700 rounded-full flex items-center justify-center text-zinc-300 hover:text-white text-base font-bold shadow transition-all"
             >
               &times;
             </button>
 
             {/* Left Preview Column */}
-            <div className="flex-1 p-6 bg-stone-900 flex flex-col justify-center overflow-y-auto min-h-[350px]">
+            <div className="flex-1 p-6 bg-zinc-950 flex flex-col justify-center overflow-y-auto min-h-[350px]">
               <RoomView
                 imageUrl={selectedPhoto.image}
                 size={selectedSize}
@@ -144,18 +144,18 @@ export const Favorites = () => {
             </div>
 
             {/* Right Configurator Column */}
-            <div className="w-full md:w-[400px] p-6 overflow-y-auto bg-white flex flex-col justify-between">
+            <div className="w-full md:w-[420px] p-6 md:p-8 overflow-y-auto bg-zinc-900 border-l border-zinc-800/80 flex flex-col justify-between">
               <div>
                 <header className="mb-4">
-                  <h2 className="text-2xl font-black text-stone-900 tracking-tight">
+                  <h2 className="text-2xl font-bold text-white tracking-tight">
                     {selectedPhoto.title}
                   </h2>
-                  <span className="inline-block mt-1 text-xs font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-250">
+                  <span className="inline-block mt-1.5 text-xs font-semibold text-zinc-300 bg-zinc-800 px-2.5 py-1 rounded-md border border-zinc-700/60">
                     {getCategoryName(selectedPhoto.categoryId)}
                   </span>
                 </header>
 
-                <p className="text-xs text-stone-600 italic leading-relaxed mb-6 bg-stone-50 p-3 border border-stone-200 rounded-xl">
+                <p className="text-xs text-zinc-400 leading-relaxed mb-6 bg-zinc-950/60 p-4 border border-zinc-800/80 rounded-xl">
                   {selectedPhoto.description.replace(/===STORY===|===LOCATION===|===TECHNICAL===/ig, '').trim()}
                 </p>
 
@@ -168,8 +168,8 @@ export const Favorites = () => {
                 />
               </div>
 
-              <div className="mt-6 text-[10px] text-stone-400 text-center font-semibold">
-                Compra directa segura • Certificado de Autenticidad firmado por el artista.
+              <div className="mt-6 text-[11px] text-zinc-500 text-center font-medium">
+                Compra directa segura • Certificado de Autenticidad firmado por Alvaro Cadena.
               </div>
             </div>
           </div>

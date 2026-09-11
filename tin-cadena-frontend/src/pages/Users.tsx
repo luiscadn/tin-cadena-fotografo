@@ -181,96 +181,98 @@ export const Users = () => {
 
   return (
     <SidebarLayout>
-      <header className="pm-page-header border-b border-stone-200 pb-4 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <header className="pm-page-header border-b border-zinc-800/80 pb-5 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="pm-page-title text-stone-900 font-extrabold flex items-center gap-2">
-            <i className="bi bi-people-fill text-amber-600"></i> Gestión de Usuarios
+          <h1 className="pm-page-title flex items-center gap-2.5">
+            <i className="bi bi-people-fill text-zinc-400"></i> Gestión de Usuarios
           </h1>
-          <p className="text-sm text-stone-500 mt-1">
-            Administra las cuentas de usuario de la plataforma y sus respectivos roles de acceso.
+          <p className="pm-page-subtitle">
+            Administración centralizada de identidades, credenciales y privilegios de acceso.
           </p>
         </div>
         <button
           onClick={handleOpenCreateModal}
-          className="btn btn-amber bg-gradient-to-r from-amber-600 to-amber-800 hover:from-amber-500 hover:to-amber-700 text-white font-bold px-5 py-2.5 rounded-xl shadow-lg border-0 transition-all flex items-center gap-2"
+          className="pm-btn pm-btn-primary text-sm"
         >
           <i className="bi bi-person-plus-fill"></i> Nuevo Usuario
         </button>
       </header>
 
       {error && (
-        <div className="p-4 mb-6 bg-red-50 border border-red-200 text-red-700 rounded-xl font-semibold flex items-center gap-2">
-          <i className="bi bi-exclamation-triangle-fill"></i>
+        <div className="p-4 mb-6 bg-rose-950/40 border border-rose-800/50 text-rose-300 rounded-2xl text-sm font-medium flex items-center gap-2.5">
+          <i className="bi bi-exclamation-octagon-fill text-rose-400"></i>
           {error}
         </div>
       )}
 
       {loading ? (
-        <div className="flex justify-center items-center py-20 text-amber-700">
-          <span className="loading loading-spinner loading-lg mr-2"></span>
+        <div className="flex justify-center items-center py-24 text-zinc-400 text-sm">
+          <span className="loading loading-spinner loading-md mr-3 text-white"></span>
           Cargando cuentas de usuario...
         </div>
       ) : users.length === 0 ? (
-        <div className="text-center py-20 bg-white border border-stone-200 rounded-2xl p-8">
-          <i className="bi bi-people text-5xl text-stone-300 block mb-4"></i>
-          <h3 className="text-lg font-bold text-stone-700">No hay usuarios registrados</h3>
-          <p className="text-sm text-stone-500 mt-1">
+        <div className="text-center py-20 bg-zinc-900/30 border border-dashed border-zinc-800 rounded-2xl p-8 backdrop-blur-sm">
+          <i className="bi bi-people text-4xl text-zinc-600 block mb-3"></i>
+          <h3 className="text-base font-semibold text-zinc-200">No hay usuarios registrados</h3>
+          <p className="text-sm text-zinc-500 mt-1">
             Comience creando un nuevo usuario administrativo o cliente comprador.
           </p>
         </div>
       ) : (
-        <div className="bg-white border border-stone-200 rounded-2xl shadow-md overflow-hidden">
+        <div className="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl shadow-2xl overflow-hidden backdrop-blur-md">
           <div className="overflow-x-auto w-full">
-            <table className="table w-full text-stone-800">
+            <table className="table w-full text-zinc-200 border-collapse">
               <thead>
-                <tr className="bg-stone-50 text-stone-600 border-b border-stone-200">
-                  <th className="font-extrabold text-sm py-4">ID</th>
-                  <th className="font-extrabold text-sm py-4">Nombre Completo</th>
-                  <th className="font-extrabold text-sm py-4">Usuario</th>
-                  <th className="font-extrabold text-sm py-4">Email</th>
-                  <th className="font-extrabold text-sm py-4">Rol Asignado</th>
-                  <th className="font-extrabold text-sm py-4 text-right">Acciones</th>
+                <tr className="bg-zinc-950/60 text-zinc-400 border-b border-zinc-800/80 text-xs font-semibold uppercase tracking-wider">
+                  <th className="py-3.5 px-4 text-left w-16">ID</th>
+                  <th className="py-3.5 px-4 text-left">Nombre Completo</th>
+                  <th className="py-3.5 px-4 text-left">Usuario</th>
+                  <th className="py-3.5 px-4 text-left">Email</th>
+                  <th className="py-3.5 px-4 text-center">Rol Asignado</th>
+                  <th className="py-3.5 px-4 text-center w-28">Acciones</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-stone-100">
+              <tbody className="divide-y divide-zinc-800/50">
                 {users.map((user) => (
-                  <tr key={user.id} className="hover:bg-stone-50/50 transition-colors">
-                    <td className="font-bold text-stone-500 text-xs">{user.id}</td>
-                    <td>
-                      <div className="font-extrabold text-stone-900">{user.name}</div>
+                  <tr key={user.id} className="hover:bg-zinc-800/30 transition-colors">
+                    <td className="py-4 px-4 font-mono text-xs text-zinc-500">{user.id}</td>
+                    <td className="py-4 px-4">
+                      <div className="font-semibold text-zinc-100 text-sm">{user.name}</div>
                     </td>
-                    <td>
-                      <span className="badge badge-ghost font-semibold text-xs py-2 px-2.5">{user.username}</span>
+                    <td className="py-4 px-4">
+                      <span className="font-mono text-xs px-2.5 py-1 rounded-md bg-zinc-800/80 text-zinc-300 border border-zinc-700/60">
+                        {user.username}
+                      </span>
                     </td>
-                    <td className="text-sm font-medium text-stone-600">{user.email}</td>
-                    <td>
-                      <span className={`inline-block text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider ${
+                    <td className="py-4 px-4 text-xs text-zinc-400">{user.email}</td>
+                    <td className="py-4 px-4 text-center">
+                      <span className={`inline-block text-[10px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider ${
                         user.roleName === 'ROLE_ADMIN' 
-                          ? 'bg-red-50 text-red-600 border border-red-200' 
+                          ? 'bg-rose-950/40 text-rose-400 border border-rose-800/50' 
                           : user.roleName === 'ROLE_PHOTOGRAPHER'
-                          ? 'bg-amber-50 text-amber-700 border border-amber-200'
-                          : 'bg-emerald-50 text-emerald-600 border border-emerald-200'
+                          ? 'bg-purple-950/40 text-purple-400 border border-purple-800/50'
+                          : 'bg-emerald-950/40 text-emerald-400 border border-emerald-800/50'
                       }`}>
                         {user.roleName.replace('ROLE_', '')}
                       </span>
                     </td>
-                    <td className="text-right">
-                      <div className="flex justify-end gap-2">
+                    <td className="py-4 px-4 text-center">
+                      <div className="flex justify-center gap-1.5">
                         <button
                           onClick={() => handleOpenEditModal(user)}
                           disabled={actionLoading}
-                          className="btn btn-sm btn-ghost text-amber-600 hover:bg-amber-50 rounded-lg p-1.5 focus:outline-none"
+                          className="p-2 rounded-xl border border-zinc-800 bg-zinc-900/60 hover:border-zinc-600 hover:bg-zinc-800 text-zinc-300 hover:text-white transition-all"
                           title="Editar"
                         >
-                          <i className="bi bi-pencil-square text-lg"></i>
+                          <i className="bi bi-pencil-square"></i>
                         </button>
                         <button
                           onClick={() => handleDeleteUser(user.id, user.name)}
                           disabled={actionLoading}
-                          className="btn btn-sm btn-ghost text-red-500 hover:bg-red-50 rounded-lg p-1.5 focus:outline-none"
+                          className="p-2 rounded-xl border border-zinc-800 bg-zinc-900/60 hover:border-rose-800/60 hover:bg-rose-950/30 text-zinc-400 hover:text-rose-300 transition-all"
                           title="Eliminar"
                         >
-                          <i className="bi bi-trash-fill text-lg"></i>
+                          <i className="bi bi-trash"></i>
                         </button>
                       </div>
                     </td>
@@ -284,46 +286,46 @@ export const Users = () => {
 
       {/* Modal - Create/Edit User */}
       {showModal && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-stone-950/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="relative bg-white border border-stone-200 rounded-2xl w-full max-w-md overflow-hidden shadow-2xl p-6">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="relative bg-zinc-900 border border-zinc-800 rounded-2xl w-full max-w-md overflow-hidden shadow-2xl p-6 text-zinc-100">
             
-            <header className="mb-5 flex justify-between items-center border-b border-stone-100 pb-3">
-              <h3 className="text-xl font-bold text-stone-900 flex items-center gap-1.5">
-                <i className={`bi ${editingUser ? 'bi-pencil-square text-amber-600' : 'bi-person-plus-fill text-amber-600'}`}></i>
+            <header className="mb-5 flex justify-between items-center border-b border-zinc-800/80 pb-3">
+              <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                <i className={`bi ${editingUser ? 'bi-pencil-square text-zinc-400' : 'bi-person-plus-fill text-zinc-400'}`}></i>
                 {editingUser ? 'Editar Cuenta' : 'Nuevo Usuario'}
               </h3>
               <button
                 onClick={() => setShowModal(false)}
-                className="w-7 h-7 bg-stone-100 hover:bg-stone-200 rounded-full flex items-center justify-center text-stone-500 font-bold"
+                className="w-7 h-7 bg-zinc-800 hover:bg-zinc-700 rounded-full flex items-center justify-center text-zinc-400 hover:text-white font-bold transition-all"
               >
                 &times;
               </button>
             </header>
 
             {formError && (
-              <div className="p-3 mb-4 bg-red-50 border border-red-150 text-red-700 rounded-xl text-xs font-semibold flex items-center gap-1.5">
-                <i className="bi bi-exclamation-triangle-fill"></i>
+              <div className="p-3 mb-4 bg-rose-950/40 border border-rose-800/50 text-rose-300 rounded-xl text-xs font-medium flex items-center gap-2">
+                <i className="bi bi-exclamation-triangle-fill text-rose-400"></i>
                 {formError}
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-4 text-stone-850">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-stone-700 mb-1">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
                   Nombre Completo *
                 </label>
                 <input
                   type="text"
                   required
                   placeholder="Ej. Juan Pérez"
-                  className="w-full p-2.5 border border-stone-250 rounded-xl bg-stone-50/50 text-stone-900 outline-none focus:ring-2 focus:ring-amber-600"
+                  className="w-full p-2.5 border border-zinc-800 rounded-xl bg-zinc-950 text-zinc-100 placeholder-zinc-600 outline-none focus:border-zinc-400 text-sm transition-all"
                   value={formData.name}
                   onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-stone-700 mb-1">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
                   Nombre de Usuario *
                 </label>
                 <input
@@ -331,35 +333,35 @@ export const Users = () => {
                   required
                   disabled={!!editingUser}
                   placeholder="Ej. juanperez"
-                  className="w-full p-2.5 border border-stone-250 rounded-xl bg-stone-50/50 text-stone-900 outline-none focus:ring-2 focus:ring-amber-600 disabled:opacity-60"
+                  className="w-full p-2.5 border border-zinc-800 rounded-xl bg-zinc-950 text-zinc-100 placeholder-zinc-600 outline-none focus:border-zinc-400 text-sm transition-all disabled:opacity-50"
                   value={formData.username}
                   onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-stone-700 mb-1">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
                   Correo Electrónico *
                 </label>
                 <input
                   type="email"
                   required
                   placeholder="Ej. juan@correo.com"
-                  className="w-full p-2.5 border border-stone-250 rounded-xl bg-stone-50/50 text-stone-900 outline-none focus:ring-2 focus:ring-amber-600"
+                  className="w-full p-2.5 border border-zinc-800 rounded-xl bg-zinc-950 text-zinc-100 placeholder-zinc-600 outline-none focus:border-zinc-400 text-sm transition-all"
                   value={formData.email}
                   onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-stone-700 mb-1">
-                  Contraseña {editingUser && '(Dejar vacío para conservar actual)'} *
+                <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
+                  Contraseña {editingUser && '[Dejar vacío para conservar actual]'} *
                 </label>
                 <input
                   type="password"
                   required={!editingUser}
                   placeholder="********"
-                  className="w-full p-2.5 border border-stone-250 rounded-xl bg-stone-50/50 text-stone-900 outline-none focus:ring-2 focus:ring-amber-600"
+                  className="w-full p-2.5 border border-zinc-800 rounded-xl bg-zinc-950 text-zinc-100 placeholder-zinc-600 outline-none focus:border-zinc-400 text-sm transition-all"
                   value={formData.password}
                   onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
                 />
@@ -367,11 +369,11 @@ export const Users = () => {
 
               {!editingUser && (
                 <div>
-                  <label className="block text-xs font-bold text-stone-700 mb-1">
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
                     Rol Inicial *
                   </label>
                   <select
-                    className="w-full p-2.5 border border-stone-250 rounded-xl bg-stone-50/50 text-stone-900 outline-none focus:ring-2 focus:ring-amber-600"
+                    className="w-full p-2.5 border border-zinc-800 rounded-xl bg-zinc-950 text-zinc-100 outline-none focus:border-zinc-400 text-sm transition-all"
                     value={formData.roleId}
                     onChange={(e) => setFormData(prev => ({ ...prev, roleId: e.target.value }))}
                   >
@@ -384,18 +386,18 @@ export const Users = () => {
                 </div>
               )}
 
-              <div className="flex gap-3 border-t border-stone-100 pt-4 mt-6">
+              <div className="flex gap-3 border-t border-zinc-800/80 pt-4 mt-6">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="flex-1 py-2.5 border border-stone-250 hover:bg-stone-50 rounded-xl text-stone-700 font-bold transition-colors text-sm"
+                  className="flex-1 py-2.5 border border-zinc-800 hover:bg-zinc-800/60 rounded-xl text-zinc-300 font-semibold transition-all text-sm"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={actionLoading}
-                  className="flex-1 py-2.5 bg-gradient-to-r from-amber-600 to-amber-800 hover:from-amber-500 hover:to-amber-700 text-white font-bold rounded-xl shadow-lg transition-all active:scale-[0.98] disabled:opacity-50 text-sm"
+                  className="flex-1 py-2.5 bg-white hover:bg-zinc-200 text-zinc-950 font-semibold rounded-xl shadow-md transition-all active:scale-[0.98] disabled:opacity-50 text-sm"
                 >
                   {actionLoading ? (
                     <span className="loading loading-spinner loading-sm"></span>

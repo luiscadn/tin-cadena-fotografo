@@ -5,7 +5,11 @@ module.exports = {
   ],
 
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+      },
+    },
   },
 
   plugins: [
@@ -13,9 +17,6 @@ module.exports = {
   ],
 
   daisyui: {
-    themes: [
-      'light',
-      'dark',
-    ],
+    themes: ['dark'],
   },
 }

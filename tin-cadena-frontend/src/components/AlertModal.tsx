@@ -19,29 +19,40 @@ export default function AlertModal({
 }: AlertModalProps) {
   if (!isOpen) return null
 
-  const colorClasses = {
-    success: 'bg-green-100 border-green-400 text-green-800',
-    error: 'bg-red-100 border-red-400 text-red-800',
-    warning: 'bg-yellow-100 border-yellow-400 text-yellow-800',
-    info: 'bg-blue-100 border-blue-400 text-blue-800',
+  const typeStyles = {
+    success: {
+      border: 'border-emerald-800/60',
+      badge: 'bg-emerald-950/60 text-emerald-400 border border-emerald-800/50',
+      button: 'bg-emerald-600 hover:bg-emerald-500 text-white',
+    },
+    error: {
+      border: 'border-rose-800/60',
+      badge: 'bg-rose-950/60 text-rose-400 border border-rose-800/50',
+      button: 'bg-rose-600 hover:bg-rose-500 text-white',
+    },
+    warning: {
+      border: 'border-amber-800/60',
+      badge: 'bg-amber-950/60 text-amber-400 border border-amber-800/50',
+      button: 'bg-amber-600 hover:bg-amber-500 text-white',
+    },
+    info: {
+      border: 'border-zinc-700',
+      badge: 'bg-zinc-800 text-zinc-300 border border-zinc-700',
+      button: 'bg-white hover:bg-zinc-200 text-zinc-950',
+    },
   }
 
-  const buttonClasses = {
-    success: 'bg-green-500 hover:bg-green-600',
-    error: 'bg-red-500 hover:bg-red-600',
-    warning: 'bg-yellow-500 hover:bg-yellow-600',
-    info: 'bg-blue-500 hover:bg-blue-600',
-  }
+  const current = typeStyles[type]
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className={`rounded-lg shadow-lg max-w-sm mx-4 p-6 border-l-4 ${colorClasses[type]}`}>
-        <h2 className="text-xl font-bold mb-2">{title}</h2>
-        <div className="mb-6 opacity-90">{message}</div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+      <div className={`bg-zinc-900 border ${current.border} rounded-2xl shadow-2xl max-w-md w-full p-6 text-zinc-100`}>
+        <h2 className="text-lg font-bold text-white tracking-tight mb-2">{title}</h2>
+        <div className="text-sm text-zinc-400 mb-6 leading-relaxed">{message}</div>
         <div className="flex justify-end">
           <button
             onClick={onClose}
-            className={`px-4 py-2 text-white rounded-lg transition ${buttonClasses[type]}`}
+            className={`px-4 py-2.5 rounded-xl font-semibold transition-all text-sm shadow-md ${current.button}`}
           >
             {closeText}
           </button>

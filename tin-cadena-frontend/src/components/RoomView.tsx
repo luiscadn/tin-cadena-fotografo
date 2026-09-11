@@ -31,26 +31,26 @@ export const RoomView = ({
       : { top: '38%', left: '55%' } // living room beige wall above sofa
 
   return (
-    <div className="bg-stone-900 border border-stone-800 rounded-2xl p-6 shadow-2xl text-stone-200">
+    <div className="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-5 shadow-2xl text-zinc-200">
       <div className="flex justify-between items-center mb-4">
         <div>
-          <h3 className="text-xs uppercase tracking-widest text-amber-500 font-bold mb-1">
+          <h3 className="text-[11px] uppercase tracking-widest text-zinc-400 font-semibold mb-0.5">
             Visualización Inmersiva
           </h3>
-          <p className="text-xs text-stone-400">
-            Previsualice la escala real en entornos simulados.
+          <p className="text-xs text-zinc-400">
+            Previsualice la escala real en ambientes arquitectónicos.
           </p>
         </div>
 
         {/* Room Toggles */}
-        <div className="inline-flex rounded-lg border border-stone-700 p-0.5 bg-stone-850">
+        <div className="inline-flex rounded-xl border border-zinc-800 p-1 bg-zinc-950/80">
           <button
             type="button"
             onClick={() => setActiveRoom('living')}
-            className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${
+            className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all ${
               activeRoom === 'living'
-                ? 'bg-amber-600 text-white'
-                : 'text-stone-400 hover:text-stone-200'
+                ? 'bg-white text-zinc-950 shadow-sm'
+                : 'text-zinc-400 hover:text-white'
             }`}
           >
             Living Room
@@ -58,10 +58,10 @@ export const RoomView = ({
           <button
             type="button"
             onClick={() => setActiveRoom('lobby')}
-            className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${
+            className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all ${
               activeRoom === 'lobby'
-                ? 'bg-amber-600 text-white'
-                : 'text-stone-400 hover:text-stone-200'
+                ? 'bg-white text-zinc-950 shadow-sm'
+                : 'text-zinc-400 hover:text-white'
             }`}
           >
             Lobby de Lujo

@@ -205,14 +205,14 @@ export const PhotographForm = ({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white border border-stone-250 rounded-2xl p-6 shadow-xl text-stone-800 max-w-2xl mx-auto">
-      <h3 className="text-xl font-bold text-stone-900 border-b border-stone-100 pb-3 mb-6">
+    <form onSubmit={handleSubmit} className="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-6 md:p-8 shadow-2xl text-zinc-100 backdrop-blur-md max-w-2xl mx-auto">
+      <h3 className="text-xl font-bold text-white border-b border-zinc-800/80 pb-4 mb-6 tracking-tight">
         {photo ? 'Editar Obra de Arte' : 'Registrar Nueva Obra de Arte'}
       </h3>
 
       {error && (
-        <div className="pm-alert pm-alert-error mb-6 p-4 rounded-xl border border-red-200 bg-red-50 text-red-700 flex items-center gap-2 text-sm font-semibold">
-          <i className="bi bi-exclamation-triangle-fill"></i>
+        <div className="pm-alert pm-alert-error mb-6 p-4 rounded-xl border border-rose-800/50 bg-rose-950/40 text-rose-300 flex items-center gap-2 text-sm font-medium">
+          <i className="bi bi-exclamation-triangle-fill text-rose-400"></i>
           {error}
         </div>
       )}
@@ -221,75 +221,75 @@ export const PhotographForm = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         {/* Título */}
         <div className="pm-form-group md:col-span-2">
-          <label className="block text-sm font-semibold text-stone-700 mb-1">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
             Título de la Obra *
           </label>
           <input
             type="text"
-            className={`w-full p-2.5 border rounded-xl bg-stone-50/50 text-stone-950 focus:ring-2 focus:ring-amber-600 outline-none ${
-              validationErrors.title ? 'border-red-400' : 'border-stone-200'
+            className={`w-full p-3 border rounded-xl bg-zinc-950/80 text-zinc-100 focus:border-zinc-400 outline-none text-sm transition-all ${
+              validationErrors.title ? 'border-rose-500' : 'border-zinc-800'
             }`}
             placeholder="Ej. Murmullos del Silencio"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
           {validationErrors.title && (
-            <p className="text-xs text-red-500 mt-1 font-semibold">{validationErrors.title}</p>
+            <p className="text-xs text-rose-400 mt-1 font-medium">{validationErrors.title}</p>
           )}
         </div>
 
         {/* Precio Base */}
         <div className="pm-form-group">
-          <label className="block text-sm font-semibold text-stone-700 mb-1">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
             Precio Base ($ USD) *
           </label>
           <input
             type="number"
             step="0.01"
-            className={`w-full p-2.5 border rounded-xl bg-stone-50/50 text-stone-950 focus:ring-2 focus:ring-amber-600 outline-none ${
-              validationErrors.price ? 'border-red-400' : 'border-stone-200'
+            className={`w-full p-3 border rounded-xl bg-zinc-950/80 text-zinc-100 focus:border-zinc-400 outline-none text-sm transition-all ${
+              validationErrors.price ? 'border-rose-500' : 'border-zinc-800'
             }`}
             placeholder="Ej. 1200.00"
             value={price}
             onChange={(e) => setPrice(e.target.value === '' ? '' : parseFloat(e.target.value))}
           />
           {validationErrors.price && (
-            <p className="text-xs text-red-500 mt-1 font-semibold">{validationErrors.price}</p>
+            <p className="text-xs text-rose-400 mt-1 font-medium">{validationErrors.price}</p>
           )}
         </div>
 
         {/* Edición Máxima */}
         <div className="pm-form-group">
-          <label className="block text-sm font-semibold text-stone-700 mb-1">
-            Edición Máxima (Copias) *
+          <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
+            Edición Máxima [Copias] *
           </label>
           <input
             type="number"
-            className={`w-full p-2.5 border rounded-xl bg-stone-50/50 text-stone-950 focus:ring-2 focus:ring-amber-600 outline-none ${
-              validationErrors.edition ? 'border-red-400' : 'border-stone-200'
+            className={`w-full p-3 border rounded-xl bg-zinc-950/80 text-zinc-100 focus:border-zinc-400 outline-none text-sm transition-all ${
+              validationErrors.edition ? 'border-rose-500' : 'border-zinc-800'
             }`}
             placeholder="Ej. 10"
             value={edition}
             onChange={(e) => setEdition(e.target.value === '' ? '' : parseInt(e.target.value, 10))}
           />
           {validationErrors.edition && (
-            <p className="text-xs text-red-500 mt-1 font-semibold">{validationErrors.edition}</p>
+            <p className="text-xs text-rose-400 mt-1 font-medium">{validationErrors.edition}</p>
           )}
         </div>
 
         {/* Categoría */}
         <div className="pm-form-group">
-          <label className="block text-sm font-semibold text-stone-700 mb-1">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
             Categoría *
           </label>
           <select
-            className={`w-full p-2.5 border rounded-xl bg-stone-50/50 text-stone-950 focus:ring-2 focus:ring-amber-600 outline-none ${
-              validationErrors.categoryId ? 'border-red-400' : 'border-stone-200'
+            className={`w-full p-3 border rounded-xl bg-zinc-950/80 text-zinc-100 focus:border-zinc-400 outline-none text-sm transition-all ${
+              validationErrors.categoryId ? 'border-rose-500' : 'border-zinc-800'
             }`}
             value={categoryId}
             onChange={(e) => setCategoryId(e.target.value === '' ? '' : Number(e.target.value))}
           >
-            <option value="">Seleccione...</option>
+            <option value="">Seleccione categoría...</option>
             {categories.map((c) => (
               <option key={c.id} value={c.id}>
                 {c.name}
@@ -297,18 +297,18 @@ export const PhotographForm = ({
             ))}
           </select>
           {validationErrors.categoryId && (
-            <p className="text-xs text-red-500 mt-1 font-semibold">{validationErrors.categoryId}</p>
+            <p className="text-xs text-rose-400 mt-1 font-medium">{validationErrors.categoryId}</p>
           )}
         </div>
 
         {/* URL de Imagen */}
         <div className="pm-form-group">
-          <label className="block text-sm font-semibold text-stone-700 mb-1">
-            URL de la Fotografía (Visualización)
+          <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
+            URL de la Fotografía [Visualización]
           </label>
           <input
             type="text"
-            className="w-full p-2.5 border border-stone-200 rounded-xl bg-stone-50/50 text-stone-950 focus:ring-2 focus:ring-amber-600 outline-none"
+            className="w-full p-3 border border-zinc-800 rounded-xl bg-zinc-950/80 text-zinc-100 focus:border-zinc-400 outline-none text-sm transition-all"
             placeholder="Ej. https://url-de-mi-foto.com/image.jpg"
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
@@ -317,84 +317,84 @@ export const PhotographForm = ({
       </div>
 
       {/* Subsección de Metadata Obligatoria */}
-      <div className="bg-amber-50/30 border border-amber-900/10 rounded-2xl p-4 mb-6">
-        <h4 className="text-sm font-bold text-amber-900 mb-3 flex items-center gap-1.5 border-b border-amber-900/10 pb-2">
-          <i className="bi bi-info-circle-fill text-amber-700"></i>
-          Ficha Técnica & Contextual Fine Art
+      <div className="bg-zinc-950/60 border border-zinc-800/80 rounded-2xl p-5 mb-6">
+        <h4 className="text-xs font-bold text-zinc-300 uppercase tracking-wider mb-4 flex items-center gap-2 border-b border-zinc-800/60 pb-3">
+          <i className="bi bi-info-circle text-zinc-400"></i>
+          Ficha Técnica y Contextual Fine Art
         </h4>
 
         <div className="space-y-4">
           {/* Historia de captura */}
           <div>
-            <label className="block text-xs font-bold text-stone-700 mb-1">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
               Historia de la Captura *
             </label>
             <textarea
-              className={`w-full p-2.5 border rounded-xl bg-white text-stone-950 focus:ring-2 focus:ring-amber-600 outline-none h-20 resize-none text-sm ${
-                validationErrors.story ? 'border-red-400' : 'border-stone-200'
+              className={`w-full p-3 border rounded-xl bg-zinc-950 text-zinc-100 focus:border-zinc-400 outline-none h-24 resize-none text-sm transition-all ${
+                validationErrors.story ? 'border-rose-500' : 'border-zinc-800'
               }`}
-              placeholder="Describa el momento, la intención artística, la luz..."
+              placeholder="Describa el momento, la intención artística, la iluminación..."
               value={story}
               onChange={(e) => setStory(e.target.value)}
             />
             {validationErrors.story && (
-              <p className="text-[10px] text-red-500 mt-0.5 font-semibold">{validationErrors.story}</p>
+              <p className="text-xs text-rose-400 mt-1 font-medium">{validationErrors.story}</p>
             )}
           </div>
 
           {/* Ubicación geográfica */}
           <div>
-            <label className="block text-xs font-bold text-stone-700 mb-1">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
               Ubicación Geográfica *
             </label>
             <input
               type="text"
-              className={`w-full p-2.5 border rounded-xl bg-white text-stone-950 focus:ring-2 focus:ring-amber-600 outline-none text-sm ${
-                validationErrors.location ? 'border-red-400' : 'border-stone-200'
+              className={`w-full p-3 border rounded-xl bg-zinc-950 text-zinc-100 focus:border-zinc-400 outline-none text-sm transition-all ${
+                validationErrors.location ? 'border-rose-500' : 'border-zinc-800'
               }`}
-              placeholder="Ej. Desierto de Atacama, Chile (23° S, 67° W)"
+              placeholder="Ej. South Beach, Miami Beach, FL [25.7617° N, 80.1918° W]"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
             />
             {validationErrors.location && (
-              <p className="text-[10px] text-red-500 mt-0.5 font-semibold">{validationErrors.location}</p>
+              <p className="text-xs text-rose-400 mt-1 font-medium">{validationErrors.location}</p>
             )}
           </div>
 
           {/* Parámetros técnicos de la cámara */}
           <div>
-            <label className="block text-xs font-bold text-stone-700 mb-1">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">
               Parámetros Técnicos de la Cámara *
             </label>
             <input
               type="text"
-              className={`w-full p-2.5 border rounded-xl bg-white text-stone-950 focus:ring-2 focus:ring-amber-600 outline-none text-sm ${
-                validationErrors.tech ? 'border-red-400' : 'border-stone-200'
+              className={`w-full p-3 border rounded-xl bg-zinc-950 text-zinc-100 focus:border-zinc-400 outline-none text-sm font-mono transition-all ${
+                validationErrors.tech ? 'border-rose-500' : 'border-zinc-800'
               }`}
               placeholder="Ej. Leica M11, Summilux 50mm, f/1.4, 1/250s, ISO 64"
               value={tech}
               onChange={(e) => setTech(e.target.value)}
             />
             {validationErrors.tech && (
-              <p className="text-[10px] text-red-500 mt-0.5 font-semibold">{validationErrors.tech}</p>
+              <p className="text-xs text-rose-400 mt-1 font-medium">{validationErrors.tech}</p>
             )}
           </div>
         </div>
       </div>
 
       {/* Botones */}
-      <div className="flex gap-4 border-t border-stone-100 pt-6">
+      <div className="flex gap-4 border-t border-zinc-800/80 pt-6">
         <button
           type="button"
           onClick={onCancel}
-          className="flex-1 py-2.5 border border-stone-300 hover:bg-stone-50 rounded-xl text-stone-700 font-bold transition-colors"
+          className="flex-1 py-3 border border-zinc-800 hover:border-zinc-600 hover:bg-zinc-800/50 rounded-xl text-zinc-300 font-semibold transition-all text-sm"
         >
           Cancelar
         </button>
         <button
           type="submit"
           disabled={loading}
-          className="flex-1 py-2.5 bg-gradient-to-r from-amber-700 to-amber-900 hover:from-amber-600 hover:to-amber-800 text-white font-bold rounded-xl shadow-lg transition-all active:scale-[0.98] disabled:opacity-50"
+          className="flex-1 py-3 bg-white hover:bg-zinc-200 text-zinc-950 font-semibold rounded-xl shadow-lg transition-all active:scale-[0.98] disabled:opacity-50 text-sm"
         >
           {loading ? (
             <span className="loading loading-spinner loading-sm"></span>

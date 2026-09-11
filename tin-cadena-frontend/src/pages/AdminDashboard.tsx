@@ -142,20 +142,20 @@ export const AdminDashboard = () => {
 
   return (
     <SidebarLayout>
-      <header className="pm-page-header border-b border-stone-200 pb-4">
+      <header className="pm-page-header border-b border-zinc-800/80 pb-5">
         <div>
-          <h1 className="pm-page-title text-stone-900 font-extrabold flex items-center gap-2">
-            <i className="bi bi-camera"></i> Panel Operativo del Artista
+          <h1 className="pm-page-title flex items-center gap-2.5">
+            <i className="bi bi-camera text-zinc-400"></i> Panel Operativo del Artista
           </h1>
-          <p className="text-sm text-stone-500 mt-1">
-            Gestione y supervise su catálogo de obras de arte fine-art.
+          <p className="pm-page-subtitle">
+            Gestione y supervise el catálogo exclusivo de obras fine-art de Alvaro Cadena.
           </p>
         </div>
 
         {!isFormOpen && (
           <button
             onClick={handleCreateClick}
-            className="pm-btn pm-btn-primary bg-gradient-to-r from-amber-700 to-amber-900 hover:from-amber-600 hover:to-amber-800 border-none shadow-lg text-sm"
+            className="pm-btn pm-btn-primary"
           >
             <i className="bi bi-plus-lg"></i> Registrar Obra
           </button>
@@ -163,7 +163,7 @@ export const AdminDashboard = () => {
       </header>
 
       {isFormOpen ? (
-        <div className="py-4">
+        <div className="py-6">
           <PhotographForm
             photo={editingPhoto}
             onSubmitSuccess={handleFormSuccess}
@@ -173,22 +173,22 @@ export const AdminDashboard = () => {
       ) : (
         <div className="mt-6">
           {error && (
-            <div className="p-4 mb-4 bg-red-50 border border-red-200 text-red-700 rounded-xl flex items-center gap-2 font-semibold">
-              <i className="bi bi-exclamation-octagon-fill"></i>
+            <div className="p-4 mb-6 bg-rose-950/40 border border-rose-800/50 text-rose-300 rounded-2xl flex items-center gap-2.5 text-sm font-medium">
+              <i className="bi bi-exclamation-octagon-fill text-rose-400"></i>
               {error}
             </div>
           )}
 
           {loading && photos.length === 0 ? (
-            <div className="flex justify-center items-center py-20 text-amber-700">
-              <span className="loading loading-spinner loading-lg mr-2"></span>
-              Sincronizando inventario con la galería...
+            <div className="flex justify-center items-center py-24 text-zinc-400 text-sm">
+              <span className="loading loading-spinner loading-md mr-3 text-white"></span>
+              Sincronizando inventario de la galería...
             </div>
           ) : photos.length === 0 ? (
-            <div className="text-center py-20 bg-white border border-stone-200 rounded-2xl p-8 shadow-inner">
-              <i className="bi bi-images text-5xl text-stone-300 block mb-4"></i>
-              <h3 className="text-lg font-bold text-stone-700">No hay obras registradas</h3>
-              <p className="text-sm text-stone-500 mt-1 mb-6">
+            <div className="text-center py-20 bg-zinc-900/30 border border-dashed border-zinc-800 rounded-2xl p-8 backdrop-blur-sm">
+              <i className="bi bi-images text-4xl text-zinc-600 block mb-3"></i>
+              <h3 className="text-base font-semibold text-zinc-200">No hay obras registradas</h3>
+              <p className="text-sm text-zinc-500 mt-1 mb-6">
                 Comience cargando su primera fotografía de edición limitada.
               </p>
               <button
@@ -199,37 +199,37 @@ export const AdminDashboard = () => {
               </button>
             </div>
           ) : (
-            <div className="overflow-x-auto bg-white border border-stone-200 rounded-2xl shadow-xl">
+            <div className="overflow-x-auto bg-zinc-900/60 border border-zinc-800/80 rounded-2xl shadow-2xl backdrop-blur-md">
               <table className="table w-full border-collapse">
                 <thead>
-                  <tr className="bg-stone-50 text-stone-600 border-b border-stone-200">
-                    <th className="py-3 px-4 font-bold text-xs uppercase text-left w-24">Pieza</th>
-                    <th className="py-3 px-4 font-bold text-xs uppercase text-left">Detalles de la Obra</th>
-                    <th className="py-3 px-4 font-bold text-xs uppercase text-left w-32">Ficha Contextual</th>
-                    <th className="py-3 px-4 font-bold text-xs uppercase text-right w-24">Precio Base</th>
-                    <th className="py-3 px-4 font-bold text-xs uppercase text-center w-24">Copias</th>
-                    <th className="py-3 px-4 font-bold text-xs uppercase text-center w-32">Estado</th>
-                    <th className="py-3 px-4 font-bold text-xs uppercase text-center w-36">Acciones</th>
+                  <tr className="bg-zinc-950/60 text-zinc-400 border-b border-zinc-800/80 text-xs font-semibold uppercase tracking-wider">
+                    <th className="py-3.5 px-4 text-left w-24">Pieza</th>
+                    <th className="py-3.5 px-4 text-left">Detalles de la Obra</th>
+                    <th className="py-3.5 px-4 text-left w-36">Ficha Contextual</th>
+                    <th className="py-3.5 px-4 text-right w-28">Precio Base</th>
+                    <th className="py-3.5 px-4 text-center w-24">Edición</th>
+                    <th className="py-3.5 px-4 text-center w-32">Estado</th>
+                    <th className="py-3.5 px-4 text-center w-32">Acciones</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-stone-100">
+                <tbody className="divide-y divide-zinc-800/50">
                   {photos.map((photo) => {
                     const isSold = photo.status === 'SOLD'
                     const parsedDesc = parseDescription(photo.description)
                     
                     return (
-                      <tr key={photo.id} className={`hover:bg-stone-50/50 transition-colors ${isSold ? 'bg-stone-50/20' : ''}`}>
+                      <tr key={photo.id} className={`hover:bg-zinc-800/30 transition-colors ${isSold ? 'opacity-75' : ''}`}>
                         {/* Thumbnail */}
                         <td className="py-4 px-4 align-middle">
-                          <div className="w-16 h-20 rounded-lg overflow-hidden border border-stone-200 shadow-sm bg-stone-100 relative">
+                          <div className="w-16 h-20 rounded-xl overflow-hidden border border-zinc-800 shadow-md bg-zinc-950 relative">
                             <img
                               src={photo.image || 'https://images.unsplash.com/photo-1543857778-c4a1a3e0b2eb?w=500&auto=format&fit=crop&q=80'}
                               alt={photo.title}
                               className={`w-full h-full object-cover ${isSold ? 'grayscale' : ''}`}
                             />
                             {isSold && (
-                              <div className="absolute inset-0 bg-red-950/20 flex items-center justify-center">
-                                <span className="text-[10px] bg-red-600 text-white font-extrabold px-1 rounded">SOLD</span>
+                              <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                                <span className="text-[10px] bg-zinc-800 text-zinc-300 font-bold px-1.5 py-0.5 rounded border border-zinc-700">SOLD</span>
                               </div>
                             )}
                           </div>
@@ -237,49 +237,49 @@ export const AdminDashboard = () => {
 
                         {/* Title & Category */}
                         <td className="py-4 px-4 align-top">
-                          <div className="font-extrabold text-stone-900 text-base">{photo.title}</div>
-                          <div className="text-xs text-amber-800 font-semibold mt-1">
+                          <div className="font-semibold text-zinc-100 text-base tracking-tight">{photo.title}</div>
+                          <div className="text-xs text-zinc-400 font-medium mt-0.5">
                             {getCategoryName(photo.categoryId)}
                           </div>
-                          <p className="text-xs text-stone-500 mt-2 line-clamp-2 max-w-sm italic">
+                          <p className="text-xs text-zinc-500 mt-2 line-clamp-2 max-w-sm">
                             "{parsedDesc.story}"
                           </p>
                         </td>
 
                         {/* Ficha Contextual */}
-                        <td className="py-4 px-4 align-top text-xs text-stone-600">
-                          <div className="space-y-1">
+                        <td className="py-4 px-4 align-top text-xs text-zinc-400">
+                          <div className="space-y-1.5">
                             <div>
-                              <span className="font-bold text-stone-500 block">Ubicación</span>
-                              <span className="truncate block max-w-xs">{parsedDesc.location || 'N/A'}</span>
+                              <span className="font-semibold text-zinc-500 block text-[11px] uppercase tracking-wider">Ubicación</span>
+                              <span className="truncate block max-w-xs text-zinc-300">{parsedDesc.location || 'N/A'}</span>
                             </div>
-                            <div className="pt-1">
-                              <span className="font-bold text-stone-500 block">Cámara</span>
-                              <span className="truncate block max-w-xs text-[10px]">{parsedDesc.tech || 'N/A'}</span>
+                            <div>
+                              <span className="font-semibold text-zinc-500 block text-[11px] uppercase tracking-wider">Cámara</span>
+                              <span className="truncate block max-w-xs text-zinc-400 font-mono text-[11px]">{parsedDesc.tech || 'N/A'}</span>
                             </div>
                           </div>
                         </td>
 
                         {/* Precio */}
-                        <td className="py-4 px-4 align-middle text-right font-extrabold text-stone-900 text-sm">
+                        <td className="py-4 px-4 align-middle text-right font-semibold text-zinc-100 text-sm">
                           ${photo.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                         </td>
 
                         {/* Edición */}
-                        <td className="py-4 px-4 align-middle text-center text-xs font-semibold text-stone-700">
-                          {photo.edition}
+                        <td className="py-4 px-4 align-middle text-center text-xs font-semibold text-zinc-300">
+                          #{photo.edition}
                         </td>
 
                         {/* Estado Badge */}
                         <td className="py-4 px-4 align-middle text-center">
                           {isSold ? (
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-red-600 text-white shadow-sm shadow-red-500/20 border border-red-700">
-                              <i className="bi bi-lock-fill"></i>
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-zinc-800/80 text-zinc-400 border border-zinc-700/60">
+                              <i className="bi bi-lock-fill text-[10px]"></i>
                               Sold Out
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-600 text-white shadow-sm shadow-emerald-500/20 border border-emerald-700">
-                              <i className="bi bi-check-circle-fill"></i>
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-950/40 text-emerald-400 border border-emerald-800/50">
+                              <i className="bi bi-check-circle-fill text-[10px]"></i>
                               Disponible
                             </span>
                           )}
@@ -287,15 +287,15 @@ export const AdminDashboard = () => {
 
                         {/* Acciones */}
                         <td className="py-4 px-4 align-middle text-center">
-                          <div className="flex gap-2 justify-center">
+                          <div className="flex gap-1.5 justify-center">
                             <button
                               type="button"
                               onClick={() => handleEditClick(photo)}
                               disabled={isSold}
-                              className={`p-2 rounded-lg border text-sm transition-all ${
+                              className={`p-2 rounded-xl border text-sm transition-all ${
                                 isSold
-                                  ? 'border-stone-100 bg-stone-50 text-stone-400 cursor-not-allowed'
-                                  : 'border-stone-200 hover:border-amber-600 hover:bg-amber-50 text-stone-700 hover:text-amber-800'
+                                  ? 'border-zinc-800/40 bg-zinc-900/30 text-zinc-600 cursor-not-allowed'
+                                  : 'border-zinc-800 bg-zinc-900/60 hover:border-zinc-600 hover:bg-zinc-800 text-zinc-300 hover:text-white'
                               }`}
                               title={isSold ? 'Las obras vendidas están bloqueadas' : 'Editar obra'}
                             >
@@ -305,10 +305,10 @@ export const AdminDashboard = () => {
                               type="button"
                               onClick={() => handleDelete(photo.id)}
                               disabled={isSold}
-                              className={`p-2 rounded-lg border text-sm transition-all ${
+                              className={`p-2 rounded-xl border text-sm transition-all ${
                                 isSold
-                                  ? 'border-stone-100 bg-stone-50 text-stone-400 cursor-not-allowed'
-                                  : 'border-red-100 hover:border-red-600 hover:bg-red-50 text-stone-700 hover:text-red-800'
+                                  ? 'border-zinc-800/40 bg-zinc-900/30 text-zinc-600 cursor-not-allowed'
+                                  : 'border-zinc-800 bg-zinc-900/60 hover:border-rose-800/60 hover:bg-rose-950/30 text-zinc-400 hover:text-rose-300'
                               }`}
                               title={isSold ? 'Las obras vendidas están bloqueadas' : 'Eliminar obra'}
                             >
@@ -325,7 +325,6 @@ export const AdminDashboard = () => {
           )}
         </div>
       )}
-
       {/* Modal - Confirm Delete */}
       <ConfirmModal
         isOpen={confirmModal.isOpen}

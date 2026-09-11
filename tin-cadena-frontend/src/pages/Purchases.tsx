@@ -132,33 +132,34 @@ export const Purchases = () => {
 
   return (
     <SidebarLayout>
-      <header className="pm-page-header border-b border-stone-200 pb-4 mb-6">
+      <header className="pm-page-header border-b border-zinc-800/80 pb-5 mb-6">
         <div>
-          <h1 className="pm-page-title text-stone-900 font-extrabold flex items-center gap-2">
-            <i className="bi bi-bag-check-fill text-amber-700"></i> Mis Adquisiciones
+          <h1 className="pm-page-title flex items-center gap-2.5">
+            <i className="bi bi-bag-check-fill text-zinc-400"></i> Mis Adquisiciones
           </h1>
-          <p className="text-sm text-stone-500 mt-1">
-            Historial de obras de arte adquiridas y descarga de certificados criptográficos de autenticidad.
+          <p className="pm-page-subtitle">
+            Historial de obras de arte adquiridas y descarga de certificados de autenticidad emitidos por Alvaro Cadena.
           </p>
         </div>
       </header>
 
       {error && (
-        <div className="p-4 mb-6 bg-red-50 border border-red-200 text-red-700 rounded-xl font-semibold">
+        <div className="p-4 mb-6 bg-rose-950/40 border border-rose-800/50 text-rose-300 rounded-2xl text-sm font-medium flex items-center gap-2.5">
+          <i className="bi bi-exclamation-octagon-fill text-rose-400"></i>
           {error}
         </div>
       )}
 
       {loading && sales.length === 0 ? (
-        <div className="flex justify-center items-center py-20 text-amber-700">
-          <span className="loading loading-spinner loading-lg mr-2"></span>
+        <div className="flex justify-center items-center py-24 text-zinc-400 text-sm">
+          <span className="loading loading-spinner loading-md mr-3 text-white"></span>
           Recuperando su colección personal...
         </div>
       ) : sales.length === 0 ? (
-        <div className="text-center py-20 bg-white border border-stone-200 rounded-2xl p-8 shadow-md">
-          <i className="bi bi-bag-x text-5xl text-stone-300 block mb-4"></i>
-          <h3 className="text-lg font-bold text-stone-700">Aún no tiene adquisiciones</h3>
-          <p className="text-sm text-stone-500 mt-1">
+        <div className="text-center py-20 bg-zinc-900/30 border border-dashed border-zinc-800 rounded-2xl p-8 backdrop-blur-sm">
+          <i className="bi bi-bag-x text-4xl text-zinc-600 block mb-3"></i>
+          <h3 className="text-base font-semibold text-zinc-200">Aún no tiene adquisiciones</h3>
+          <p className="text-sm text-zinc-500 mt-1">
             Explore nuestra galería fine-art para encontrar su próxima obra de arte única.
           </p>
         </div>
@@ -171,11 +172,11 @@ export const Purchases = () => {
             return (
               <div
                 key={sale.id}
-                className="bg-white border border-stone-200 rounded-2xl p-5 shadow-md flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:shadow-lg transition-all"
+                className="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-5 shadow-lg flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-zinc-700/80 transition-all"
               >
                 <div className="flex items-center gap-4">
                   {/* Photo Thumbnail */}
-                  <div className="w-16 h-20 rounded-lg overflow-hidden border border-stone-200 shadow-sm bg-stone-100 flex-shrink-0">
+                  <div className="w-16 h-20 rounded-xl overflow-hidden border border-zinc-800 shadow-md bg-zinc-950 flex-shrink-0">
                     <img
                       src={photo?.image || 'https://images.unsplash.com/photo-1543857778-c4a1a3e0b2eb?w=500&auto=format&fit=crop&q=80'}
                       alt={photo?.title || 'Obra'}
@@ -185,23 +186,23 @@ export const Purchases = () => {
 
                   {/* Metadata */}
                   <div>
-                    <h3 className="font-extrabold text-stone-900 text-lg leading-tight">
-                      {photo?.title || 'Obra de arte (Eliminada)'}
+                    <h3 className="font-semibold text-zinc-100 text-base leading-tight tracking-tight">
+                      {photo?.title || 'Obra de arte [Eliminada]'}
                     </h3>
-                    <p className="text-xs text-stone-400 mt-1">
+                    <p className="text-xs text-zinc-400 mt-1">
                       Adquirido el {new Date(sale.saleDate).toLocaleDateString()}
                     </p>
-                    <div className="inline-flex items-center gap-1.5 mt-2 px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-250">
+                    <div className="inline-flex items-center gap-1.5 mt-2 px-2.5 py-0.5 rounded-md text-[10px] font-semibold bg-zinc-800 text-zinc-300 border border-zinc-700/60">
                       ID de Transacción: #{sale.id}
                     </div>
                   </div>
                 </div>
 
                 {/* Pricing & Download Certificate button */}
-                <div className="flex flex-row md:flex-col justify-between items-center md:items-end w-full md:w-auto border-t md:border-t-0 pt-4 md:pt-0 border-stone-100">
+                <div className="flex flex-row md:flex-col justify-between items-center md:items-end w-full md:w-auto border-t md:border-t-0 pt-4 md:pt-0 border-zinc-800/80">
                   <div className="mb-0 md:mb-3">
-                    <span className="text-[10px] text-stone-400 block font-semibold text-left md:text-right">VALOR PAGADO</span>
-                    <span className="font-black text-stone-900 text-xl block">
+                    <span className="text-[10px] text-zinc-500 block font-semibold uppercase tracking-wider text-left md:text-right">VALOR PAGADO</span>
+                    <span className="font-semibold text-white text-xl block">
                       ${sale.totalAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                     </span>
                   </div>
@@ -210,7 +211,7 @@ export const Purchases = () => {
                     type="button"
                     onClick={() => handleDownloadCertificate(sale.id)}
                     disabled={isDownloading}
-                    className="pm-btn pm-btn-success text-xs py-2 px-4 rounded-xl flex items-center gap-2 border-none bg-gradient-to-r from-stone-850 to-stone-950 text-white hover:from-amber-800 hover:to-amber-950 shadow-md active:scale-95 disabled:opacity-50"
+                    className="border border-zinc-700 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-xs py-2 px-4 rounded-xl flex items-center gap-2 shadow-sm transition-all active:scale-95 disabled:opacity-50"
                   >
                     {isDownloading ? (
                       <>
@@ -219,7 +220,7 @@ export const Purchases = () => {
                       </>
                     ) : (
                       <>
-                        <i className="bi bi-file-earmark-pdf-fill"></i>
+                        <i className="bi bi-file-earmark-pdf-fill text-rose-400"></i>
                         Descargar Certificado
                       </>
                     )}
