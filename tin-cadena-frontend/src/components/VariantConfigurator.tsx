@@ -50,7 +50,7 @@ export const VariantConfigurator = ({
     const item: CartItem = {
       key,
       id: photo.id,
-      name: `${photo.title} (${size} / ${material})`,
+      name: `${photo.title} [${size} · ${material}]`,
       quantity,
       price: finalPrice,
       basePrice: photo.price,

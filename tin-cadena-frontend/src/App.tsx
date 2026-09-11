@@ -21,6 +21,7 @@ import { Favorites } from './pages/Favorites'
 import { Purchases } from './pages/Purchases'
 import { Users } from './pages/Users'
 import { Roles } from './pages/Roles'
+import { Home } from './pages/Home'
 
 export const App = () => {
   const {
@@ -42,12 +43,7 @@ export const App = () => {
         <Routes>
           <Route
             path="/"
-            element={
-              <Navigate
-                to={isAuthenticated ? '/dashboard' : '/login'}
-                replace
-              />
-            }
+            element={<Home />}
           />
 
           <Route
@@ -106,11 +102,7 @@ export const App = () => {
 
           <Route
             path="/explore"
-            element={
-              <ProtectedRoute>
-                <Explore />
-              </ProtectedRoute>
-            }
+            element={<Explore />}
           />
 
           <Route
