@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import api from '../services/api'
+import { PublicNavbar } from '../components/PublicNavbar'
 import { RoomView } from '../components/RoomView'
 import { VariantConfigurator } from '../components/VariantConfigurator'
 import { useAuth, useCart } from '../hooks'
@@ -69,131 +70,63 @@ export const Home = () => {
     setSelectedSize('Classic')
   }
 
+  const heroPhoto = photos[0]
+
   return (
-    <div className="min-h-screen bg-[#09090b] text-zinc-100 flex flex-col selection:bg-white selection:text-black">
-      {/* Sticky Glassmorphic Navbar */}
-      <nav className="sticky top-0 z-40 bg-[#09090b]/85 backdrop-blur-md border-b border-zinc-800/80 px-4 sm:px-8 py-3.5 transition-all">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          
-          {/* Brand Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl bg-zinc-800/80 border border-zinc-700/60 flex items-center justify-center text-white text-lg group-hover:border-zinc-500 transition-colors">
-              <i className="bi bi-camera2"></i>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-bold tracking-[0.2em] text-white">
-                TIN CADENA
-              </span>
-              <span className="text-[8px] tracking-[0.22em] uppercase text-zinc-400 font-semibold">
-                Fine Art Photography · Miami
-              </span>
-            </div>
-          </Link>
-
-          {/* Quick Navigation Links */}
-          <div className="hidden md:flex items-center gap-6 text-xs font-semibold text-zinc-400">
-            <a href="#galeria" className="hover:text-white transition-colors">
-              Galería de Obras
-            </a>
-            <a href="#room-view" className="hover:text-white transition-colors">
-              Simulador Room View
-            </a>
-            <a href="#arquitectura" className="hover:text-white transition-colors">
-              Arquitectura de Software
-            </a>
-          </div>
-
-          {/* User / Cart Actions */}
-          <div className="flex items-center gap-3">
-            <Link
-              to="/checkout"
-              className="relative p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800/60 transition-colors"
-              title="Carrito de compras"
-            >
-              <i className="bi bi-cart2 text-lg"></i>
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-white text-zinc-950 text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-md">
-                  {cartCount}
-                </span>
-              )}
-            </Link>
-
-            {isAuthenticated ? (
-              <Link
-                to="/dashboard"
-                className="px-4 py-2 rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 font-semibold text-xs transition-all shadow-sm active:scale-95 flex items-center gap-2"
-              >
-                <i className="bi bi-speedometer2"></i>
-                <span>Mi Panel [{user?.username}]</span>
-              </Link>
-            ) : (
-              <div className="flex items-center gap-2">
-                <Link
-                  to="/login"
-                  className="px-3.5 py-2 rounded-xl border border-zinc-800 hover:bg-zinc-800 text-zinc-300 font-semibold text-xs transition-colors"
-                >
-                  Iniciar Sesión
-                </Link>
-                <Link
-                  to="/register"
-                  className="px-4 py-2 rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 font-semibold text-xs transition-all shadow-sm active:scale-95 hidden sm:inline-flex"
-                >
-                  Registro
-                </Link>
-              </div>
-            )}
-          </div>
+    <div className="min-h-screen bg-obsidian text-zinc-100 flex flex-col selection:bg-white selection:text-black">
+      {/* Hero Section — full-bleed fine art layout, nav floats on the artwork */}
+      <section className="relative w-full min-h-screen overflow-hidden flex flex-col justify-between border-b border-white/10">
+        {/* Immersive artwork background */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src={heroPhoto?.image || 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1600&auto=format&fit=crop&q=80'}
+            alt={heroPhoto?.title || 'Obra de autor'}
+            className="w-full h-full object-cover object-center brightness-[0.85] contrast-[1.05]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 pointer-events-none" />
         </div>
-      </nav>
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden pt-20 pb-24 sm:pt-28 sm:pb-32 border-b border-zinc-800/80 bg-gradient-to-b from-[#0e0e14] via-[#09090b] to-[#09090b]">
-        {/* Subtle Ambient Glow */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-white/[0.03] rounded-full blur-3xl pointer-events-none" />
+        {/* Transparent floating navbar */}
+        <PublicNavbar
+          isAuthenticated={isAuthenticated}
+          username={user?.username}
+          cartCount={cartCount}
+        />
 
-        <div className="max-w-5xl mx-auto px-6 text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900/60 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase mb-6 backdrop-blur-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            Galería Fine-Art & Portafolio de Arquitectura
-          </div>
+        {/* Floating title block, anchored to the base of the artwork */}
+        <div className="relative z-10 w-full max-w-4xl mx-auto text-center pb-20 px-6 flex flex-col items-center">
+          <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.35em] text-stone-300 font-mono mb-3">
+            Serie Limitada · Miami
+          </span>
 
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-[1.08]">
-            Fotografía de Autor en <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 via-zinc-300 to-zinc-500">
-              Edición Limitada
-            </span>
+          <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-light text-white tracking-wide mb-6">
+            Fotografía de Autor
           </h1>
 
-          <p className="text-zinc-400 text-sm sm:text-base max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
-            Obras exclusivas capturadas por el fotógrafo <strong>Alvaro Cadena</strong> en Miami.
-            Impresiones de grado museístico en <strong>TruLife® Acrylic</strong> y <strong>ChromaLuxe® Metal</strong> con certificado digital de autenticidad emitido en tiempo real.
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-3.5">
+          <div className="flex flex-col sm:flex-row items-center gap-6 mt-2">
             <a
               href="#galeria"
-              className="px-6 py-3 bg-white hover:bg-zinc-200 text-zinc-950 font-semibold text-xs rounded-xl shadow-lg transition-all active:scale-95 flex items-center gap-2"
+              className="text-xs uppercase tracking-[0.25em] text-white hover:text-stone-300 transition-colors pb-1 border-b border-white hover:border-stone-400"
             >
-              <i className="bi bi-images"></i>
-              Explorar Catálogo Abierto
+              Ver Catálogo y Formatos
             </a>
+
+            <span className="hidden sm:inline-block text-stone-500 text-xs">/</span>
 
             <a
               href="#room-view"
-              className="px-5 py-3 border border-zinc-800 hover:bg-zinc-800/80 text-zinc-300 font-semibold text-xs rounded-xl transition-all flex items-center gap-2"
+              className="text-xs uppercase tracking-[0.25em] text-stone-300 hover:text-white transition-colors"
             >
-              <i className="bi bi-eye"></i>
-              Simulador Room View
-            </a>
-
-            <a
-              href="#arquitectura"
-              className="px-5 py-3 border border-zinc-800 hover:border-zinc-600 bg-zinc-900/50 text-zinc-300 font-semibold text-xs rounded-xl transition-all flex items-center gap-2"
-            >
-              <i className="bi bi-diagram-3"></i>
-              Ficha de Ingeniería
+              Probar en Habitación
             </a>
           </div>
+        </div>
+
+        {/* Curatorial / EXIF bar */}
+        <div className="relative z-10 w-full px-6 sm:px-8 py-4 border-t border-white/10 flex flex-col sm:flex-row gap-2 sm:gap-0 justify-between items-center text-[10px] font-mono tracking-wider text-stone-400 text-center sm:text-left">
+          <div>EDICIÓN LIMITADA · {heroPhoto?.edition ?? '—'} EJEMPLARES</div>
+          <div className="hidden sm:block">TRULIFE® ACRYLIC · CHROMALUXE® METAL</div>
+          <div>CERTIFICADO DE AUTENTICIDAD DIGITAL</div>
         </div>
       </section>
 
@@ -436,113 +369,8 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* Software Architecture & Engineering Showcase Section */}
-      <section id="arquitectura" className="py-20 px-4 sm:px-8 border-t border-zinc-800/80">
-        <div className="max-w-6xl mx-auto">
-          
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase mb-4">
-              <i className="bi bi-code-slash text-white"></i>
-              Portafolio Técnico
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-              Arquitectura de Software & Stack Tecnológico
-            </h2>
-            <p className="text-xs sm:text-sm text-zinc-400 mt-2 leading-relaxed">
-              Diseño integral desacoplado bajo principios de Domain-Driven Design, seguridad sin estado [stateless], concurrencia transaccional y comunicación bidireccional en tiempo real.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Card 1: Backend */}
-            <div className="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-6 shadow-lg flex flex-col backdrop-blur-sm">
-              <div className="w-10 h-10 rounded-xl bg-zinc-800 border border-zinc-700/60 flex items-center justify-center text-white text-lg mb-4 shadow-inner">
-                <i className="bi bi-hdd-rack"></i>
-              </div>
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-2">
-                Backend Enterprise
-              </h3>
-              <ul className="text-xs text-zinc-400 space-y-2 flex-1">
-                <li>• Java 17 LTS</li>
-                <li>• Spring Boot 3.5</li>
-                <li>• Spring Security 6 Stateless</li>
-                <li>• JWT Tokens con Claims</li>
-                <li>• STOMP WebSockets / SockJS</li>
-                <li>• iText PDF Generator [Certificados]</li>
-              </ul>
-              <div className="mt-4 pt-3 border-t border-zinc-800 text-[10px] text-zinc-500 font-mono">
-                tin-cadena-backend
-              </div>
-            </div>
-
-            {/* Card 2: Frontend */}
-            <div className="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-6 shadow-lg flex flex-col backdrop-blur-sm">
-              <div className="w-10 h-10 rounded-xl bg-zinc-800 border border-zinc-700/60 flex items-center justify-center text-white text-lg mb-4 shadow-inner">
-                <i className="bi bi-window"></i>
-              </div>
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-2">
-                Frontend SPA
-              </h3>
-              <ul className="text-xs text-zinc-400 space-y-2 flex-1">
-                <li>• React 19 + TypeScript</li>
-                <li>• Vite Build Engine</li>
-                <li>• TailwindCSS + DaisyUI</li>
-                <li>• Redux Toolkit [Cart & Auth]</li>
-                <li>• Plus Jakarta Sans Typography</li>
-                <li>• Responsive Glassmorphism</li>
-              </ul>
-              <div className="mt-4 pt-3 border-t border-zinc-800 text-[10px] text-zinc-500 font-mono">
-                tin-cadena-frontend
-              </div>
-            </div>
-
-            {/* Card 3: Database */}
-            <div className="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-6 shadow-lg flex flex-col backdrop-blur-sm">
-              <div className="w-10 h-10 rounded-xl bg-zinc-800 border border-zinc-700/60 flex items-center justify-center text-white text-lg mb-4 shadow-inner">
-                <i className="bi bi-database"></i>
-              </div>
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-2">
-                Persistencia & Datos
-              </h3>
-              <ul className="text-xs text-zinc-400 space-y-2 flex-1">
-                <li>• PostgreSQL 16 RDBMS</li>
-                <li>• Spring Data JPA / Hibernate</li>
-                <li>• Transacciones ACID</li>
-                <li>• Índices y Claves Foráneas</li>
-                <li>• Control de Ediciones Limitadas</li>
-                <li>• Auditoría de Compras y Ventas</li>
-              </ul>
-              <div className="mt-4 pt-3 border-t border-zinc-800 text-[10px] text-zinc-500 font-mono">
-                schema: photo_market
-              </div>
-            </div>
-
-            {/* Card 4: Security & RBAC */}
-            <div className="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-6 shadow-lg flex flex-col backdrop-blur-sm">
-              <div className="w-10 h-10 rounded-xl bg-zinc-800 border border-zinc-700/60 flex items-center justify-center text-white text-lg mb-4 shadow-inner">
-                <i className="bi bi-shield-check"></i>
-              </div>
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-2">
-                Seguridad & Roles
-              </h3>
-              <ul className="text-xs text-zinc-400 space-y-2 flex-1">
-                <li>• ROLE_ADMIN [Gestión global]</li>
-                <li>• ROLE_PHOTOGRAPHER [Obras]</li>
-                <li>• ROLE_BUYER [Adquisiciones]</li>
-                <li>• Catálogo Público GET Abierto</li>
-                <li>• BCrypt Password Hashing</li>
-                <li>• CORS & CSRF Hardening</li>
-              </ul>
-              <div className="mt-4 pt-3 border-t border-zinc-800 text-[10px] text-zinc-500 font-mono">
-                RBAC Fine-Grained
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
-      <footer className="border-t border-zinc-800/80 bg-zinc-950 py-12 px-6">
+      <footer className="border-t border-white/10 bg-obsidian py-12 px-6">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <i className="bi bi-camera2 text-xl text-white"></i>
@@ -563,17 +391,24 @@ export const Home = () => {
             <a href="#room-view" className="hover:text-zinc-300 transition-colors">
               Simulador
             </a>
-            <a href="#arquitectura" className="hover:text-zinc-300 transition-colors">
-              Arquitectura
-            </a>
             <Link to="/login" className="hover:text-zinc-300 transition-colors">
               Acceso Privado
             </Link>
           </div>
+        </div>
 
-          <div className="text-[10px] text-zinc-600 font-medium text-center sm:text-right">
-            Plataforma de Ingeniería de Software para Portafolio Profesional
-          </div>
+        {/* Discrete technical note — engineering credit, relocated out of the gallery narrative */}
+        <div className="max-w-7xl mx-auto mt-10 pt-6 border-t border-white/10">
+          <details className="group">
+            <summary className="cursor-pointer text-[10px] font-mono text-zinc-600 hover:text-zinc-400 transition-colors list-none">
+              Ficha de ingeniería — stack técnico de la plataforma
+            </summary>
+            <p className="mt-3 text-[10px] font-mono text-zinc-500 leading-relaxed max-w-3xl">
+              Backend: Java 17 · Spring Boot 3.5 · Spring Security 6 Stateless · JWT · STOMP/SockJS · iText PDF.
+              Frontend: React 19 · TypeScript · Vite · TailwindCSS · Redux Toolkit. Datos: PostgreSQL 16 ·
+              Spring Data JPA · transacciones ACID. Seguridad: RBAC [ADMIN / PHOTOGRAPHER / BUYER] · BCrypt · CORS/CSRF.
+            </p>
+          </details>
         </div>
       </footer>
 
