@@ -78,14 +78,15 @@ El cliente web cuenta con configuracion dinamica mediante variables de entorno e
 
 ---
 
-## Vinculacion con Repositorio Remoto
+## Repositorio Oficial
 
-Para vincular este monorepo a tu cuenta de GitHub:
+Repositorio centralizado en GitHub:
+https://github.com/luiscadn/tin-cadena-fotografo
+
+Para clonar el proyecto con ambos modulos [Backend y Frontend]:
 
 ```bash
-git add .
-git commit -m "feat: inicializar monorepo TinCadenaFotografo con backend y frontend limpios"
-git remote add origin git@github.com:<tu-usuario>/TinCadenaFotografo.git
-git branch -M main
-git push -u origin main
+git clone https://github.com/luiscadn/tin-cadena-fotografo.git
+cd tin-cadena-fotografo
 ```
+
