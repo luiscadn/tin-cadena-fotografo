@@ -77,133 +77,143 @@ export const Explore = () => {
 
   return (
     <SidebarLayout>
-      <header className="pm-page-header border-b border-zinc-800/80 pb-5 mb-6">
+      <header className="border-b border-white/10 pb-5 mb-6">
         <div>
-          <h1 className="pm-page-title flex items-center gap-2.5">
-            <i className="bi bi-search text-zinc-400"></i> Explorar Galería Fine-Art
+          <h1 className="font-serif text-2xl text-canvas flex items-center gap-2.5">
+            Explorar Galería Fine-Art
           </h1>
-          <p className="pm-page-subtitle">
+          <p className="text-sm text-zinc-400 mt-1">
             Obras fotográficas exclusivas de edición limitada por Alvaro Cadena con soportes de calidad de museo.
           </p>
         </div>
       </header>
 
-      {/* Filters Bar */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-8 bg-zinc-900/60 p-3 rounded-2xl border border-zinc-800/80 backdrop-blur-md shadow-lg">
+      {/* Minimal sticky filter / category bar */}
+      <div className="sticky top-0 z-10 -mx-2 px-2 py-3 mb-8 bg-obsidian/90 backdrop-blur-md border-b border-white/10 flex flex-col sm:flex-row gap-3">
         <div className="flex-1 relative">
-          <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-zinc-500">
-            <i className="bi bi-search"></i>
+          <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-zinc-500">
+            <i className="bi bi-search text-xs"></i>
           </span>
           <input
             type="text"
-            className="w-full pl-10 pr-4 py-2.5 border border-zinc-800 rounded-xl text-sm bg-zinc-950/80 outline-none text-zinc-100 placeholder-zinc-500 focus:border-zinc-500 transition-all"
+            className="w-full pl-9 pr-4 py-2 border border-white/10 rounded-sm text-sm bg-black/30 outline-none text-zinc-100 placeholder-zinc-500 focus:border-white/30 transition-all"
             placeholder="Buscar por título, historia, ubicación..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
 
-        <div className="w-full sm:w-60">
-          <select
-            className="w-full py-2.5 px-3.5 border border-zinc-800 rounded-xl text-sm bg-zinc-950/80 outline-none text-zinc-200 focus:border-zinc-500 transition-all"
-            value={selectedCat}
-            onChange={(e) => setSelectedCat(e.target.value === '' ? '' : Number(e.target.value))}
+        <div className="flex gap-2 overflow-x-auto no-scrollbar">
+          <button
+            type="button"
+            onClick={() => setSelectedCat('')}
+            className={`shrink-0 px-3 py-2 text-[11px] uppercase tracking-wide rounded-sm border transition-colors ${
+              selectedCat === ''
+                ? 'border-canvas bg-canvas text-obsidian'
+                : 'border-white/10 text-zinc-400 hover:border-white/25 hover:text-white'
+            }`}
           >
-            <option value="">Todas las categorías</option>
-            {categories.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
-              </option>
-            ))}
-          </select>
+            Todas
+          </button>
+          {categories.map((c) => (
+            <button
+              key={c.id}
+              type="button"
+              onClick={() => setSelectedCat(c.id)}
+              className={`shrink-0 px-3 py-2 text-[11px] uppercase tracking-wide rounded-sm border transition-colors ${
+                selectedCat === c.id
+                  ? 'border-canvas bg-canvas text-obsidian'
+                  : 'border-white/10 text-zinc-400 hover:border-white/25 hover:text-white'
+              }`}
+            >
+              {c.name}
+            </button>
+          ))}
         </div>
       </div>
 
       {error && (
-        <div className="p-4 mb-6 bg-rose-950/40 border border-rose-800/50 text-rose-300 rounded-2xl text-sm font-medium flex items-center gap-2.5">
+        <div className="p-4 mb-6 bg-rose-950/40 border border-rose-800/50 text-rose-300 rounded-sm text-sm font-medium flex items-center gap-2.5">
           <i className="bi bi-exclamation-octagon-fill text-rose-400"></i>
           {error}
         </div>
       )}
 
       {loading && photos.length === 0 ? (
-        <div className="flex justify-center items-center py-24 text-zinc-400 text-sm">
-          <span className="loading loading-spinner loading-md mr-3 text-white"></span>
-          Cargando obras de arte...
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="mb-6 break-inside-avoid bg-obsidian-soft border border-white/10 rounded-sm overflow-hidden animate-pulse"
+              style={{ aspectRatio: i % 3 === 0 ? '4 / 5' : i % 3 === 1 ? '3 / 2' : '1 / 1' }}
+            >
+              <div className="w-full h-full bg-white/5" />
+            </div>
+          ))}
         </div>
       ) : filteredPhotos.length === 0 ? (
-        <div className="text-center py-20 bg-zinc-900/30 border border-dashed border-zinc-800 rounded-2xl p-8 backdrop-blur-sm">
+        <div className="text-center py-20 border border-dashed border-white/10 rounded-sm p-8">
           <i className="bi bi-search text-4xl text-zinc-600 block mb-3"></i>
-          <h3 className="text-base font-semibold text-zinc-200">No se encontraron piezas</h3>
+          <h3 className="font-serif text-base text-zinc-200">No se encontraron piezas</h3>
           <p className="text-sm text-zinc-500 mt-1">
             Intente ajustar sus criterios de búsqueda o categoría.
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-6">
           {filteredPhotos.map((photo) => {
             const isSold = photo.status === 'SOLD'
             const isFav = isFavorite(photo.id)
-            
+
             return (
               <article
                 key={photo.id}
                 onClick={() => handlePhotoClick(photo)}
-                className={`group bg-zinc-900/60 rounded-2xl overflow-hidden border border-zinc-800/80 hover:border-zinc-700/80 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col cursor-pointer ${
+                className={`group relative mb-6 break-inside-avoid bg-obsidian-soft rounded-sm overflow-hidden border border-white/10 hover:border-white/25 transition-colors duration-300 cursor-pointer ${
                   isSold ? 'opacity-80' : ''
                 }`}
               >
-                {/* Photo Image Card */}
-                <div className="relative aspect-[3/4] bg-zinc-950 overflow-hidden">
+                {/* Image — natural aspect ratio, no forced cropping */}
+                <div className="relative bg-black">
                   <img
-                    src={photo.image || 'https://images.unsplash.com/photo-1543857778-c4a1a3e0b2eb?w=500&auto=format&fit=crop&q=80'}
+                    src={photo.image || 'https://images.unsplash.com/photo-1543857778-c4a1a3e0b2eb?w=800&auto=format&fit=crop&q=80'}
                     alt={photo.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-auto block"
                   />
-                  
-                  {/* Sold out overlay */}
+
                   {isSold && (
                     <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center">
-                      <span className="bg-zinc-900/90 border border-zinc-700 text-zinc-300 text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                        SOLD OUT
+                      <span className="bg-obsidian/90 border border-white/20 text-zinc-300 text-[10px] font-medium uppercase tracking-wide px-3 py-1 rounded-sm">
+                        Sold Out
                       </span>
                     </div>
                   )}
 
-                  {/* Favorite Toggle Button */}
-                  <button
-                    type="button"
-                    onClick={(e) => handleFavoriteToggle(e, photo)}
-                    className="absolute top-3 right-3 w-8 h-8 bg-black/60 hover:bg-black/80 backdrop-blur-md rounded-full flex items-center justify-center border border-zinc-700/60 shadow-md text-sm active:scale-95 transition-all"
-                  >
-                    <i
-                      className={`bi ${isFav ? 'bi-heart-fill text-rose-500' : 'text-zinc-300 bi-heart'}`}
-                    ></i>
-                  </button>
-                  
-                  {/* Category overlay */}
-                  <span className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md text-[10px] text-zinc-300 font-semibold uppercase px-2.5 py-1 rounded-md border border-zinc-700/60">
+                  {/* Hover overlay: minimal metadata, price, actions */}
+                  <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between">
+                    <div>
+                      <h3 className="font-serif text-sm text-white leading-tight">{photo.title}</h3>
+                      <div className="text-[10px] font-mono text-zinc-300 mt-1">
+                        Alvaro Cadena · Ed. #{photo.edition}
+                      </div>
+                      <div className="text-[11px] font-mono text-accent-gold mt-1">
+                        ${photo.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={(e) => handleFavoriteToggle(e, photo)}
+                      className="w-8 h-8 shrink-0 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-sm flex items-center justify-center border border-white/15 text-sm transition-all"
+                    >
+                      <i className={`bi ${isFav ? 'bi-heart-fill text-rose-500' : 'text-zinc-200 bi-heart'}`}></i>
+                    </button>
+                  </div>
+
+                  {/* Category tag, always visible */}
+                  <span className="absolute top-3 left-3 bg-black/50 backdrop-blur-md text-[10px] text-zinc-200 font-medium uppercase px-2 py-1 rounded-sm border border-white/15 opacity-0 group-hover:opacity-100 transition-opacity">
                     {categories.find((c) => c.id === photo.categoryId)?.name || 'Colección'}
                   </span>
-                </div>
-
-                {/* Details Footer */}
-                <div className="p-4 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="font-semibold text-zinc-100 text-base leading-tight group-hover:text-white transition-colors">
-                      {photo.title}
-                    </h3>
-                    <div className="text-[11px] text-zinc-400 font-medium mt-1">
-                      Edición limitada de #{photo.edition} copias
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between items-center mt-4 pt-3 border-t border-zinc-800/80">
-                    <span className="text-[10px] text-zinc-500 font-semibold uppercase tracking-wider">Base</span>
-                    <span className="font-semibold text-white text-base">
-                      ${photo.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}
-                    </span>
-                  </div>
                 </div>
               </article>
             )
@@ -213,18 +223,18 @@ export const Explore = () => {
 
       {/* Immersive Detail Modal */}
       {selectedPhoto && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200">
-          <div className="relative bg-zinc-900 border border-zinc-800 rounded-3xl w-full max-w-5xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="relative bg-obsidian-soft border border-white/10 rounded-sm w-full max-w-5xl overflow-hidden flex flex-col md:flex-row max-h-[90vh]">
             {/* Modal Close Button */}
             <button
               onClick={() => setSelectedPhoto(null)}
-              className="absolute top-4 right-4 z-10 w-8 h-8 bg-zinc-800 hover:bg-zinc-700 rounded-full flex items-center justify-center text-zinc-300 hover:text-white text-base font-bold shadow transition-all"
+              className="absolute top-4 right-4 z-10 w-8 h-8 bg-white/10 hover:bg-white/20 rounded-sm flex items-center justify-center text-zinc-300 hover:text-white text-base font-bold transition-all"
             >
               &times;
             </button>
 
             {/* Left Preview Column */}
-            <div className="flex-1 p-6 bg-zinc-950 flex flex-col justify-center overflow-y-auto min-h-[350px]">
+            <div className="flex-1 p-6 bg-obsidian flex flex-col justify-center overflow-y-auto min-h-[350px]">
               <RoomView
                 imageUrl={selectedPhoto.image}
                 size={selectedSize}
@@ -233,18 +243,18 @@ export const Explore = () => {
             </div>
 
             {/* Right Configurator Column */}
-            <div className="w-full md:w-[420px] p-6 md:p-8 overflow-y-auto bg-zinc-900 border-l border-zinc-800/80 flex flex-col justify-between">
+            <div className="w-full md:w-[420px] p-6 md:p-8 overflow-y-auto bg-obsidian-soft border-l border-white/10 flex flex-col justify-between">
               <div>
                 <header className="mb-4">
-                  <h2 className="text-2xl font-bold text-white tracking-tight">
+                  <h2 className="font-serif text-2xl text-white tracking-tight">
                     {selectedPhoto.title}
                   </h2>
-                  <span className="inline-block mt-1.5 text-xs font-semibold text-zinc-300 bg-zinc-800 px-2.5 py-1 rounded-md border border-zinc-700/60">
+                  <span className="inline-block mt-1.5 text-[10px] uppercase tracking-wide font-medium text-zinc-300 bg-white/5 px-2.5 py-1 rounded-sm border border-white/10">
                     {getCategoryName(selectedPhoto.categoryId)}
                   </span>
                 </header>
 
-                <p className="text-xs text-zinc-400 leading-relaxed mb-6 bg-zinc-950/60 p-4 border border-zinc-800/80 rounded-xl">
+                <p className="text-xs text-zinc-400 leading-relaxed mb-6 bg-black/20 p-4 border border-white/10 rounded-sm">
                   {selectedPhoto.description.replace(/===STORY===|===LOCATION===|===TECHNICAL===/ig, '').trim()}
                 </p>
 

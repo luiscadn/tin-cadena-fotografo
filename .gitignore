@@ -41,3 +41,6 @@ tin-cadena-frontend/.env
 update_admin.sql
 update_passwords.sql
 *.sql.bak
+*.zip
+*.log
+

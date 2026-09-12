@@ -30,11 +30,16 @@ export const RoomView = ({
       ? { top: '35%', left: '78%' } // luxury lobby concrete wall
       : { top: '38%', left: '55%' } // living room beige wall above sofa
 
+  // Frame depth per size drives drop-shadow physics: larger prints sit
+  // proud of the wall further, so the cast shadow grows and softens.
+  const depth = size === 'Classic' ? 8 : size === 'Statement' ? 13 : 18
+  const wallShadow = `${depth * 1.1}px ${depth * 1.6}px ${depth * 2.6}px rgba(0,0,0,${0.5 + depth * 0.01})`
+
   return (
-    <div className="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-5 shadow-2xl text-zinc-200">
+    <div className="bg-obsidian-soft border border-white/10 rounded-sm p-5 text-canvas">
       <div className="flex justify-between items-center mb-4">
         <div>
-          <h3 className="text-[11px] uppercase tracking-widest text-zinc-400 font-semibold mb-0.5">
+          <h3 className="font-serif text-sm text-canvas mb-0.5">
             Visualización Inmersiva
           </h3>
           <p className="text-xs text-zinc-400">
@@ -42,15 +47,15 @@ export const RoomView = ({
           </p>
         </div>
 
-        {/* Room Toggles */}
-        <div className="inline-flex rounded-xl border border-zinc-800 p-1 bg-zinc-950/80">
+        {/* Frosted-glass floating room switcher */}
+        <div className="inline-flex rounded-sm border border-white/15 p-1 bg-white/5 backdrop-blur-md">
           <button
             type="button"
             onClick={() => setActiveRoom('living')}
-            className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all ${
+            className={`px-3 py-1 text-[11px] uppercase tracking-wide font-medium rounded-sm transition-all ${
               activeRoom === 'living'
-                ? 'bg-white text-zinc-950 shadow-sm'
-                : 'text-zinc-400 hover:text-white'
+                ? 'bg-canvas text-obsidian'
+                : 'text-zinc-300 hover:text-white'
             }`}
           >
             Living Room
@@ -58,10 +63,10 @@ export const RoomView = ({
           <button
             type="button"
             onClick={() => setActiveRoom('lobby')}
-            className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all ${
+            className={`px-3 py-1 text-[11px] uppercase tracking-wide font-medium rounded-sm transition-all ${
               activeRoom === 'lobby'
-                ? 'bg-white text-zinc-950 shadow-sm'
-                : 'text-zinc-400 hover:text-white'
+                ? 'bg-canvas text-obsidian'
+                : 'text-zinc-300 hover:text-white'
             }`}
           >
             Lobby de Lujo
@@ -70,12 +75,12 @@ export const RoomView = ({
       </div>
 
       {/* Simulated Wall Container */}
-      <div className="relative w-full h-[400px] overflow-hidden rounded-xl bg-stone-950 border border-stone-800 shadow-inner flex items-center justify-center">
+      <div className="relative w-full h-[400px] overflow-hidden rounded-sm bg-obsidian border border-white/10 flex items-center justify-center">
         {/* Background Image */}
         <img
           src={roomBackgrounds[activeRoom]}
           alt="Virtual room environment"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none brightness-[0.85] contrast-[1.05]"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none brightness-[0.85] contrast-[1.05] transition-opacity duration-500"
         />
 
         {/* Wall Spotlighting effect */}
@@ -90,10 +95,13 @@ export const RoomView = ({
             transform: `translate(-50%, -50%) scale(${scale})`,
           }}
         >
-          {/* Custom Picture Frame with Shadows and Bevels */}
-          <div className="relative border-[6px] border-stone-900 bg-stone-950 p-1.5 shadow-[0_20px_40px_rgba(0,0,0,0.65)] ring-1 ring-amber-900/40 rounded-sm">
+          {/* Custom Picture Frame — shadow depth reflects physical frame profile */}
+          <div
+            className="relative border-[6px] border-stone-900 bg-stone-950 p-1.5 ring-1 ring-white/10 rounded-sm transition-shadow duration-500"
+            style={{ boxShadow: wallShadow }}
+          >
             {/* Matte board border inside frame */}
-            <div className="bg-stone-100 p-2 shadow-inner">
+            <div className="bg-canvas p-2 shadow-inner">
               <div className="relative w-20 h-28 overflow-hidden bg-stone-300 shadow-sm flex items-center justify-center">
                 {imageUrl ? (
                   <img
@@ -124,10 +132,10 @@ export const RoomView = ({
         </div>
       </div>
 
-      {/* Info Footnote */}
-      <div className="mt-4 flex justify-between items-center text-[10px] text-stone-500 font-semibold px-1">
-        <span>Tamaño actual: <strong className="text-amber-500">{size}</strong></span>
-        <span>Soporte: <strong className="text-amber-500">{material}</strong></span>
+      {/* Info Footnote — EXIF-style data in monospace */}
+      <div className="mt-4 flex justify-between items-center text-[10px] font-mono text-stone-500 px-1">
+        <span>SIZE: <span className="text-accent-gold">{size.toUpperCase()}</span></span>
+        <span>MEDIUM: <span className="text-accent-gold">{material}</span></span>
       </div>
     </div>
   )
