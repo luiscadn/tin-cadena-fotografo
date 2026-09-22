@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------------
 
 # --- ETAPA 1: Compilación y empaquetado (Builder) ---
-FROM eclipse-temurin:21-jdk-alpine AS builder
+FROM eclipse-temurin:21-jdk-jammy AS builder
 
 WORKDIR /build
 
@@ -24,12 +24,12 @@ COPY src/ src/
 RUN ./mvnw clean package -DskipTests -B
 
 # --- ETAPA 2: Entorno de ejecución ligero (Runner) ---
-FROM eclipse-temurin:21-jre-alpine AS runner
+FROM eclipse-temurin:21-jre-jammy AS runner
 
 WORKDIR /app
 
 # Crear usuario sin privilegios root por seguridad
-RUN addgroup -S spring && adduser -S spring -G spring
+RUN groupadd -r spring && useradd -r -g spring spring
 USER spring:spring
 
 # Copiar únicamente el archivo JAR generado desde la etapa de construcción
