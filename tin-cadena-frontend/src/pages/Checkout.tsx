@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import api from '../services/api'
 import AlertModal from '../components/AlertModal'
 import { SidebarLayout } from '../components/SidebarLayout'
+import { getPhotoUrl } from '../utils/imageUtils'
 
 interface BuyerDTO {
   id: number
@@ -293,7 +294,7 @@ export const Checkout = () => {
                   {/* Photo Thumbnail */}
                   <div className="w-16 h-20 rounded-xl overflow-hidden border border-zinc-800 shadow-md bg-zinc-950 flex-shrink-0">
                     <img
-                      src={item.image || 'https://images.unsplash.com/photo-1543857778-c4a1a3e0b2eb?w=500&auto=format&fit=crop&q=80'}
+                      src={getPhotoUrl(item.image)}
                       alt={item.name}
                       className="w-full h-full object-cover"
                     />

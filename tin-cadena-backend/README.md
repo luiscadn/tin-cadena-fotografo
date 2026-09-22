@@ -108,10 +108,3 @@ La API expone sus servicios en el puerto 8085 con prefijo /api:
 | Certificados | /api/sales/{id}/certificate | GET |
 
 ---
-
-## Creditos de Desarrollo
-Plataforma profesional de arte desarrollada para la firma Tin Cadena Fotografia en Miami.
-Equipo de ingenieria y desarrollo:
-- Luis Felipe Cadena Cortés
-- Juan Esteban Cuellar
-- Fabio Felipe Murillo Rivas

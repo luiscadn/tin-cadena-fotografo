@@ -19,5 +19,6 @@ public class PhotographDTO {
     private String status;
     private Long photographerId;
     private Long categoryId;
+    private String image;
     private LocalDateTime createdAt;
 }

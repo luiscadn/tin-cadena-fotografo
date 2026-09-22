@@ -64,6 +64,7 @@ public class PhotographService {
         }
         photo.setPhotographer(photographer);
         photo.setCategory(category);
+        photo.setImage(dto.getImage());
 
         return photographRepository.save(photo);
     }
@@ -87,6 +88,9 @@ public class PhotographService {
         }
         if (dto.getStatus() != null) {
             existing.setStatus(PhotographStatus.valueOf(dto.getStatus()));
+        }
+        if (dto.getImage() != null) {
+            existing.setImage(dto.getImage());
         }
         if (dto.getPhotographerId() != null) {
             Photographer photographer = photographerRepository.findById(dto.getPhotographerId())

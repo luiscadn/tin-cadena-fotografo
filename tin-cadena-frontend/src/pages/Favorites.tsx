@@ -6,6 +6,7 @@ import { SidebarLayout } from '../components/SidebarLayout'
 import { RoomView } from '../components/RoomView'
 import { VariantConfigurator } from '../components/VariantConfigurator'
 import { useFavorites } from '../hooks'
+import { getPhotoUrl } from '../utils/imageUtils'
 import type { Photo } from '../types'
 
 interface Category {
@@ -73,7 +74,7 @@ export const Favorites = () => {
                 {/* Photo Image Card */}
                 <div className="relative aspect-[3/4] bg-zinc-950 overflow-hidden">
                   <img
-                    src={photo.image || 'https://images.unsplash.com/photo-1543857778-c4a1a3e0b2eb?w=500&auto=format&fit=crop&q=80'}
+                    src={getPhotoUrl(photo.image)}
                     alt={photo.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />

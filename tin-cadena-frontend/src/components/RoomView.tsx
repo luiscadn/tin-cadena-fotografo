@@ -1,6 +1,7 @@
 // src/components/RoomView.tsx
 
 import { useState } from 'react'
+import { getPhotoUrl } from '../utils/imageUtils'
 
 interface RoomViewProps {
   imageUrl?: string
@@ -20,8 +21,8 @@ export const RoomView = ({
   const scale = size === 'Classic' ? 1.0 : size === 'Statement' ? 1.4 : 1.8
 
   const roomBackgrounds = {
-    lobby: '/luxury_lobby.png',
-    living: '/living_room.png',
+    lobby: getPhotoUrl('/luxury_lobby.png'),
+    living: getPhotoUrl('/living_room.png'),
   }
 
   // Adjust mounting position on the wall depending on background layout
@@ -105,7 +106,7 @@ export const RoomView = ({
               <div className="relative w-20 h-28 overflow-hidden bg-stone-300 shadow-sm flex items-center justify-center">
                 {imageUrl ? (
                   <img
-                    src={imageUrl}
+                    src={getPhotoUrl(imageUrl)}
                     alt="Artwork preview"
                     className="w-full h-full object-cover"
                   />

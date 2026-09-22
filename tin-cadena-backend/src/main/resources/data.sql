@@ -270,6 +270,17 @@ INSERT INTO photographs (title, description, price, edition, status, photographe
 ('Ciudad Nocturna', 'Skyline de la ciudad bajo las estrellas. Combinacion urbano-astronomica.', 2500.00, 1, 'SOLD', 15, 3);
 
 -- ============================================
+-- The Vault Collection - Alvaro Cadena (6 Obras Insignia)
+-- ============================================
+INSERT INTO photographs (title, description, price, edition, status, photographer_id, category_id, image) VALUES
+('Bastion', '===STORY===\nUna mirada a la fortaleza marítima y el faro vigía del Mediterráneo, guardando la entrada histórica frente a las brumas de la costa provenzal.\n===LOCATION===\nMarseille, France [43.2965° N, 5.3698° E]\n===TECHNICAL===\nLeica M11, Summilux 50mm f/1.4, 1/500s, ISO 64', 2800.00, 10, 'AVAILABLE', 1, 3, '/photos/Bastion.jpg'),
+('Infinite Drift', '===STORY===\nLa soledad geométrica de un velero navegando en la inmensidad del horizonte en calma, donde el cielo plomizo y las aguas se funden en una sola escala cromática.\n===LOCATION===\nMediterranean Sea, Offshore [43.1500° N, 5.2500° E]\n===TECHNICAL===\nHasselblad X2D 100C, XCD 90mm f/2.5, 1/1000s, ISO 64', 3400.00, 7, 'AVAILABLE', 1, 1, '/photos/InfiniteDrift.webp'),
+('Silent Harbour', '===STORY===\nLa quietud matutina reflejada con precisión de espejo sobre las aguas del puerto antiguo, los mástiles trazando líneas verticales de pureza arquitectónica.\n===LOCATION===\nVieux-Port, Marseille, France\n===TECHNICAL===\nSony A7R V, FE 24-70mm f/2.8 GM II, 1/250s, ISO 100', 2600.00, 12, 'AVAILABLE', 1, 3, '/photos/SilentHarbour.webp'),
+('Slate Horizon', '===STORY===\nMurallones de piedra y horizonte agreste bajo un cielo de pizarra cargado de atmósfera atemporal, testimonio de la resistencia costera frente al viento mistral.\n===LOCATION===\nÎles du Frioul, Mediterranean Sea\n===TECHNICAL===\nLeica SL2, Vario-Elmarit-SL 24-90mm f/2.8-4, 1/320s, ISO 50', 3100.00, 5, 'AVAILABLE', 1, 1, '/photos/SlateHorizon.webp'),
+('The Sentinel I', '===STORY===\nLa basílica de Notre-Dame de la Garde iluminada sobre la colina al caer la noche, vigilando la trama urbana y el pulso vibrante de la ciudad costera.\n===LOCATION===\nNotre-Dame de la Garde, Marseille, France\n===TECHNICAL===\nLeica M11, Noctilux 50mm f/0.95, 1/60s, ISO 400', 3800.00, 7, 'AVAILABLE', 1, 3, '/photos/TheSentinel1.webp'),
+('Urban Tide', '===STORY===\nUna composición panorámica que dialoga entre la monumentalidad del fuerte histórico, los diques marítimos modernos y el tejido urbano expandiéndose hacia el mar.\n===LOCATION===\nFort Saint-Jean & La Major, Marseille\n===TECHNICAL===\nSony A7R V, 70-200mm f/2.8 GM OSS II, 1/400s, ISO 100', 3200.00, 10, 'AVAILABLE', 1, 3, '/photos/UrbanTide.webp');
+
+-- ============================================
 -- 9. VENTAS (10 transacciones completadas)
 -- ============================================
 INSERT INTO sales (buyer_id, photograph_id, total_amount, sale_date) VALUES 

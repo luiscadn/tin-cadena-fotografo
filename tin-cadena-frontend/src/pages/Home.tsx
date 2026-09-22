@@ -4,33 +4,21 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import api from '../services/api'
 import { PublicNavbar } from '../components/PublicNavbar'
+import { ExhibitionGrid } from '../components/ExhibitionGrid'
 import { RoomView } from '../components/RoomView'
-import { VariantConfigurator } from '../components/VariantConfigurator'
 import { useAuth, useCart } from '../hooks'
+import { VAULT_COLLECTION, DEFAULT_CATEGORIES, type Category } from '../data/vaultCollection'
+import { getPhotoUrl } from '../utils/imageUtils'
 import type { Photo } from '../types'
-
-interface Category {
-  id: number
-  name: string
-}
 
 export const Home = () => {
   const { isAuthenticated, user } = useAuth()
   const { items: cartItems } = useCart()
 
-  const [photos, setPhotos] = useState<Photo[]>([])
-  const [categories, setCategories] = useState<Category[]>([])
+  const [photos, setPhotos] = useState<Photo[]>(VAULT_COLLECTION)
+  const [categories, setCategories] = useState<Category[]>(DEFAULT_CATEGORIES)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-
-  // Filters
-  const [search, setSearch] = useState('')
-  const [selectedCat, setSelectedCat] = useState<number | ''>('')
-
-  // Modal State for Preview & Room Simulator
-  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null)
-  const [selectedMaterial, setSelectedMaterial] = useState<'TruLife® Acrylic' | 'ChromaLuxe® Metal'>('TruLife® Acrylic')
-  const [selectedSize, setSelectedSize] = useState<'Classic' | 'Statement' | 'Collector'>('Classic')
 
   const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0)
 
@@ -43,11 +31,33 @@ export const Home = () => {
           api.get<Photo[]>('/photographs'),
           api.get<Category[]>('/v1/categories'),
         ])
-        setPhotos(photosRes.data)
-        setCategories(categoriesRes.data)
+
+        const fetchedPhotos = photosRes.data || []
+        const fetchedCats = categoriesRes.data || []
+
+        if (fetchedPhotos.length > 0) {
+          const vaultTitles = new Set(VAULT_COLLECTION.map((p) => p.title.toLowerCase()))
+          const additional = fetchedPhotos.filter(
+            (p) => !vaultTitles.has(p.title.toLowerCase()),
+          )
+          setPhotos([...VAULT_COLLECTION, ...additional])
+        } else {
+          setPhotos(VAULT_COLLECTION)
+        }
+
+        if (fetchedCats.length > 0) {
+          const catNames = new Set(fetchedCats.map((c) => c.name.toLowerCase()))
+          const additionalCats = DEFAULT_CATEGORIES.filter(
+            (c) => !catNames.has(c.name.toLowerCase()),
+          )
+          setCategories([...fetchedCats, ...additionalCats])
+        } else {
+          setCategories(DEFAULT_CATEGORIES)
+        }
       } catch (err) {
-        console.error('Error fetching public gallery:', err)
-        setError('No fue posible cargar el catálogo público en este momento.')
+        console.warn('Backend catalog offline or unavailable; presenting local vault collection:', err)
+        setPhotos(VAULT_COLLECTION)
+        setCategories(DEFAULT_CATEGORIES)
       } finally {
         setLoading(false)
       }
@@ -55,20 +65,6 @@ export const Home = () => {
 
     fetchPublicData()
   }, [])
-
-  const filteredPhotos = photos.filter((p) => {
-    const matchesSearch =
-      p.title.toLowerCase().includes(search.toLowerCase()) ||
-      p.description.toLowerCase().includes(search.toLowerCase())
-    const matchesCat = selectedCat === '' || p.categoryId === selectedCat
-    return matchesSearch && matchesCat
-  })
-
-  const handleOpenPhoto = (photo: Photo) => {
-    setSelectedPhoto(photo)
-    setSelectedMaterial('TruLife® Acrylic')
-    setSelectedSize('Classic')
-  }
 
   const heroPhoto = photos[0]
 
@@ -79,7 +75,7 @@ export const Home = () => {
         {/* Immersive artwork background */}
         <div className="absolute inset-0 z-0">
           <img
-            src={heroPhoto?.image || 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1600&auto=format&fit=crop&q=80'}
+            src={getPhotoUrl(heroPhoto?.image)}
             alt={heroPhoto?.title || 'Obra de autor'}
             className="w-full h-full object-cover object-center brightness-[0.85] contrast-[1.05]"
           />
@@ -130,173 +126,17 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* Public Exhibition Gallery Section */}
+      {/* Exhibition Grid Section — shared source of truth with Explore.tsx */}
       <section id="galeria" className="py-20 px-4 sm:px-8 max-w-7xl mx-auto w-full">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-zinc-800/80 pb-6 mb-8">
-          <div>
-            <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest block mb-1">
-              Catálogo Abierto
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-              Exposición de Obras Fotográficas
-            </h2>
-            <p className="text-xs text-zinc-400 mt-1 max-w-xl">
-              Consulte las piezas de edición limitada disponibles. Puede previsualizarlas en escala con el simulador interactivo antes de iniciar sesión.
-            </p>
-          </div>
-
-          <div className="text-xs font-semibold text-zinc-400 bg-zinc-900/80 border border-zinc-800 px-3.5 py-1.5 rounded-xl self-start md:self-auto">
-            {filteredPhotos.length} obras exhibidas
-          </div>
-        </div>
-
-        {/* Filter and Search Bar */}
-        <div className="flex flex-col sm:flex-row gap-3 mb-8 bg-zinc-900/60 p-3 rounded-2xl border border-zinc-800/80 backdrop-blur-sm shadow-lg">
-          <div className="flex-1 relative">
-            <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-zinc-500">
-              <i className="bi bi-search"></i>
-            </span>
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 border border-zinc-800 rounded-xl text-xs bg-zinc-950 text-zinc-100 placeholder-zinc-500 outline-none focus:border-zinc-500 transition-colors"
-              placeholder="Buscar por título, temática o descripción..."
-            />
-          </div>
-
-          {/* Category Filter Chips */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
-            <button
-              type="button"
-              onClick={() => setSelectedCat('')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
-                selectedCat === ''
-                  ? 'bg-white text-zinc-950 shadow-sm'
-                  : 'bg-zinc-950/80 text-zinc-400 hover:text-white border border-zinc-800'
-              }`}
-            >
-              Todas
-            </button>
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => setSelectedCat(cat.id)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
-                  selectedCat === cat.id
-                    ? 'bg-white text-zinc-950 shadow-sm'
-                    : 'bg-zinc-950/80 text-zinc-400 hover:text-white border border-zinc-800'
-                }`}
-              >
-                {cat.name}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Error Alert */}
-        {error && (
-          <div className="p-4 mb-6 bg-rose-950/40 border border-rose-800/50 text-rose-300 rounded-2xl text-sm font-medium flex items-center gap-2.5">
-            <i className="bi bi-exclamation-octagon-fill text-rose-400"></i>
-            {error}
-          </div>
-        )}
-
-        {/* Loading State */}
-        {loading ? (
-          <div className="flex justify-center items-center py-24 text-zinc-400 text-sm">
-            <span className="loading loading-spinner loading-md mr-3 text-white"></span>
-            Cargando piezas de la galería...
-          </div>
-        ) : filteredPhotos.length === 0 ? (
-          <div className="text-center py-20 bg-zinc-900/30 border border-dashed border-zinc-800 rounded-2xl p-8 backdrop-blur-sm">
-            <i className="bi bi-camera text-4xl text-zinc-600 block mb-3"></i>
-            <h3 className="text-base font-semibold text-zinc-200">No se encontraron obras</h3>
-            <p className="text-xs text-zinc-500 mt-1">
-              Pruebe ajustando el criterio de búsqueda o seleccionando otra categoría.
-            </p>
-          </div>
-        ) : (
-          /* Artworks Grid */
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredPhotos.map((photo) => {
-              const isSold = photo.status === 'SOLD'
-
-              return (
-                <div
-                  key={photo.id}
-                  onClick={() => handleOpenPhoto(photo)}
-                  className="group bg-zinc-900/60 border border-zinc-800/80 rounded-2xl overflow-hidden shadow-lg hover:border-zinc-600/80 transition-all cursor-pointer flex flex-col backdrop-blur-sm"
-                >
-                  {/* Image Container with Zoom Effect */}
-                  <div className="relative aspect-[4/5] bg-zinc-950 overflow-hidden">
-                    <img
-                      src={photo.image || 'https://images.unsplash.com/photo-1543857778-c4a1a3e0b2eb?w=800&auto=format&fit=crop&q=80'}
-                      alt={photo.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 opacity-60 group-hover:opacity-40 transition-opacity" />
-
-                    {/* Status Badge */}
-                    <div className="absolute top-3 left-3 flex items-center gap-1.5">
-                      {isSold ? (
-                        <span className="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-zinc-900/90 text-zinc-400 border border-zinc-700/60 backdrop-blur-md">
-                          Adquirida
-                        </span>
-                      ) : (
-                        <span className="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-emerald-950/80 text-emerald-400 border border-emerald-700/60 backdrop-blur-md flex items-center gap-1">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                          Disponible
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Edition Tag */}
-                    <div className="absolute top-3 right-3">
-                      <span className="px-2.5 py-1 rounded-md text-[10px] font-semibold bg-black/60 text-zinc-300 border border-white/10 backdrop-blur-md">
-                        Edición: {photo.edition || 1}
-                      </span>
-                    </div>
-
-                    {/* Quick Action Overlay */}
-                    <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <span className="px-3 py-1.5 bg-white text-zinc-950 font-semibold text-xs rounded-xl shadow-lg flex items-center gap-1.5">
-                        <i className="bi bi-eye"></i> Simular
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Artwork Metadata */}
-                  <div className="p-5 flex flex-col flex-1">
-                    <div className="flex justify-between items-baseline gap-2 mb-1.5">
-                      <h3 className="font-semibold text-zinc-100 text-base leading-snug group-hover:text-white transition-colors truncate">
-                        {photo.title}
-                      </h3>
-                      <span className="font-bold text-white text-base flex-shrink-0">
-                        ${photo.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}
-                      </span>
-                    </div>
-
-                    <p className="text-zinc-400 text-xs line-clamp-2 mb-4 leading-relaxed flex-1">
-                      {photo.description || 'Fotografía de edición de autor capturada en Miami.'}
-                    </p>
-
-                    <div className="flex items-center justify-between pt-3 border-t border-zinc-800/80 text-[11px] text-zinc-400">
-                      <span className="flex items-center gap-1">
-                        <i className="bi bi-person text-zinc-400"></i> Alvaro Cadena
-                      </span>
-                      <span className="text-zinc-400 font-medium">
-                        TruLife® / ChromaLuxe®
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        )}
+        <ExhibitionGrid
+          photos={photos}
+          categories={categories}
+          loading={loading}
+          error={error}
+          eyebrow="Archivo de Autor / Ediciones Limitadas"
+          title="Obras Insignes & Vault Collection"
+          subtitle="Una selección curada de las piezas más representativas de Alvaro Cadena, disponibles para adquisición directa bajo especificación de calidad museística."
+        />
       </section>
 
       {/* Room View Feature Callout Section */}
@@ -411,75 +251,6 @@ export const Home = () => {
           </details>
         </div>
       </footer>
-
-      {/* Artwork Modal Preview with Room View & Variant Configurator */}
-      {selectedPhoto && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6">
-          <div className="relative bg-zinc-900 border border-zinc-800 rounded-3xl w-full max-w-5xl overflow-hidden shadow-2xl p-6 sm:p-8 max-h-[90vh] flex flex-col text-zinc-100">
-            
-            {/* Modal Header */}
-            <div className="flex justify-between items-start border-b border-zinc-800 pb-4 mb-6 flex-shrink-0">
-              <div>
-                <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block mb-1">
-                  Inspección Fine-Art & Simulador
-                </span>
-                <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                  {selectedPhoto.title}
-                </h2>
-              </div>
-              <button
-                type="button"
-                onClick={() => setSelectedPhoto(null)}
-                className="w-8 h-8 rounded-full bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white flex items-center justify-center font-bold text-sm transition-colors"
-              >
-                &times;
-              </button>
-            </div>
-
-            {/* Modal Body */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 overflow-y-auto pr-1">
-              {/* Left Column: Room View Simulation */}
-              <div>
-                <RoomView
-                  imageUrl={selectedPhoto.image}
-                  material={selectedMaterial}
-                  size={selectedSize}
-                />
-                
-                <div className="mt-4 p-4 rounded-xl bg-zinc-950/60 border border-zinc-800/80 text-xs text-zinc-400 leading-relaxed">
-                  <strong className="text-zinc-200 block mb-1 font-semibold">
-                    Certificado de Autenticidad Incluido:
-                  </strong>
-                  Cada adquisición genera un certificado en formato PDF emitido por Alvaro Cadena con identificador único de transacción.
-                </div>
-              </div>
-
-              {/* Right Column: Configurator & Order Form */}
-              <div className="flex flex-col justify-between">
-                <VariantConfigurator
-                  photo={selectedPhoto}
-                  onVariantChange={(m, s) => {
-                    setSelectedMaterial(m)
-                    setSelectedSize(s)
-                  }}
-                />
-
-                {!isAuthenticated && (
-                  <div className="mt-4 p-3.5 rounded-xl bg-zinc-950/80 border border-zinc-800 text-xs text-zinc-400 flex items-center justify-between gap-3">
-                    <span>Para concretar la compra y registrar el certificado a su nombre:</span>
-                    <Link
-                      to="/login"
-                      className="px-3 py-1.5 bg-white text-zinc-950 font-semibold rounded-lg text-xs hover:bg-zinc-200 whitespace-nowrap"
-                    >
-                      Iniciar Sesión
-                    </Link>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

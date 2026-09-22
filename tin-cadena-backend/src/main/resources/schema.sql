@@ -99,6 +99,7 @@ CREATE TABLE photographs (
     status VARCHAR(20) NOT NULL DEFAULT 'AVAILABLE',
     photographer_id BIGINT NOT NULL,
     category_id BIGINT NOT NULL,
+    image VARCHAR(500),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (photographer_id) REFERENCES photographers(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(id),
